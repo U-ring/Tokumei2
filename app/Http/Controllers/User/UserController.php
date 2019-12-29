@@ -17,4 +17,9 @@ class UserController extends Controller
   {
     return view('user.user.edit');
   }
+  
+  public function Terms()
+  {
+    return view('user.user.TermsOfService');
+  }
 }
