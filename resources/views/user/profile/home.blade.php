@@ -85,21 +85,7 @@
                           <div class="row blank-top col-md-10 mx-auto">
                               <div class="col-md-12">
                                 <p class="h2">友達リスト</p>
-                                <ul class="list-inline blank-top">
-                                  <li class="list-inline-item">+ A君</li>
-                                  <li class="list-inline-item">情報</li>
-                                  <li class="list-inline-item"><a href="#">チャットを開始する</a></li>
-                                </ul>
-                                <ul class="list-inline">
-                                  <li class="list-inline-item">+ B君</li>
-                                  <li class="list-inline-item">情報</li>
-                                  <li class="list-inline-item"><a href="#">チャットを開始する</a></li>
-                                </ul>
-                                <ul class="list-inline">
-                                  <li class="list-inline-item">+ C君</li>
-                                  <li class="list-inline-item">情報</li>
-                                  <li class="list-inline-item"><a href="#">チャットを開始する</a></li>
-                                </ul>
+                                <p class="blank-top">{{ Auth::User()->twitter_id }}</p>
                               </div>
                           </div>
                           <div class="d-flex row col-md-10 mx-auto clearfix">

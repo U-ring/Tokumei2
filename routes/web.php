@@ -34,6 +34,10 @@ Route::get('/login/{social}', 'Auth\OAuthLoginController@socialLogin');
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
 
 Route::get('/login/{social}', 'Auth\OAuthLoginController@socialLogin');
+Route::get('user/follow','Auth\OAuthLoginController@getFollowList');
+Route::get('user/follow','Auth\OAuthLoginController@getFollowList');
+Route::get('user/twitter','Auth\OAuthLoginController@twitter');
+
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
 
 Auth::routes();
