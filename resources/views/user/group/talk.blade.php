@@ -12,4 +12,5 @@
 
 @section('edit')
 <a class="navbar-brand" href="{{ action('User\GroupController@edit') }}">・・・</a>
+<div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>
 @endsection

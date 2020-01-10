@@ -31,3 +31,19 @@ body {
   margin-top: 50px;
 }
 
+.jumbotron {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-image: url(/images/stone_00133.jpg?5dd20daf7bfb50c8a07e4c61a29dfa2c);
+  background-size: cover;
+  background: contain;
+  width: 100%;
+  /* make sure to define width to fill container */
+  height: 100px;
+  /* define the height in pixels or make sure   */
+  /* you have something in your div with height */
+  /* so you can see your image */
+  max-width: 1400px;
+  /* define the max width */
+}
+

@@ -7,7 +7,8 @@
 
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
-@foreach($followers->users as $user)
+<p>{{count($followers)}}</p>
+@foreach($followers as $user)
 <p>{{ $user->name }}</p>
 @endforeach
 @endsection

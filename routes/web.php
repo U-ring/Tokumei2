@@ -11,16 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::group(['prefix' => 'user'], function(){
   Route::get('profile/login','User\ProfileController@login');
   Route::get('profile/edit','User\ProfileController@edit')->middleware('auth');
   Route::get('profile/add','User\ProfileController@add')->middleware('auth');
-  Route::get('profile/home','User\ProfileController@home')->middleware('auth');
-  Route::get('profile/talk','User\ProfileController@talk')->middleware('auth');
+  Route::get('home/guest','User\HomeController@guest')->middleware('auth');
+  Route::get('home/twitter','User\HomeController@twitter')->middleware('auth');
+  Route::get('home/facebook','User\HomeController@facebook')->middleware('auth');
+  Route::get('home/talk','User\HomeController@talk')->middleware('auth');
   Route::get('group/talk','User\GroupController@talk')->middleware('auth');
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
@@ -41,3 +43,4 @@ Route::get('user/twitter','Auth\OAuthLoginController@twitter');
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
 
 Auth::routes();
+Route::get('/','HomeController@index');

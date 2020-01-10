@@ -23,14 +23,5 @@ class ProfileController extends Controller
   {
     return view('user.profile.add');
   }
-
-  public function home()
-  {
-    return view('user.profile.home');
-  }
   
-  public function talk()
-  {
-    return view('user.profile.talk');
-  }
 }
