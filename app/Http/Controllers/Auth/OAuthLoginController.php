@@ -62,8 +62,11 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
            // OAuthによるユーザー情報取得失敗
            return redirect()->route('/')->withErrors('ユーザー情報の取得に失敗しました。');
        }
+        // var_dump($userSocial);//ユーザー情報を全て受け取るコードのすぐ下でvar_dumpしている。
+        // exit();
+        
        //メールアドレスで登録状況を調べる
-       $user = User::where(['email' => $userSocial->getEmail()])->first();
+       $user = User::where(['email' => $userSocial->getEmail()])->first();//Facebookと同じメアドのAuthユーザーでログインしてしまった。
       
        //メールアドレス登録の有無で条件分岐
        if($user){
@@ -83,15 +86,19 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
         //       Storage::put('public/profile_images/' . $file_name, $img);
         //       $newuser->avatar = $file_name;
         //   }
-        \Debugbar::info($userSocial);  
-        $newuser->avatar=$userSocial->user['avatar_original_url_https'];
+        
+        //   $newuser->avatar=$userSocial->avatar;
+        //   $newuser->avatar=$userSocial['avatar'];
+        
            //sns特有の情報を条件分岐で取得する
            switch ($social) {
                case "facebook":
                    //$newuser->name = $userSocial->getNickname();  ////ここから
+                  $newuser->avatar= $userSocial->getAvatar();
                    $newuser->facebook_id = $userSocial->getId(); //
                case "twitter":
                    //$newuser->name = $userSocial->getNickname();  ////
+                   $newuser->avatar=$userSocial->avatar;
                    $newuser->twitter_id = $userSocial->getId();  ////ここまで、変更。
                break;
            }
@@ -100,90 +107,78 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
            //ログイン
            Auth::login($newuser);
        }
-       switch ($social){
-         case "facebook":return redirect('user/home/facebook');
-         case "twitter" :return redirect('user/home/twitter');
-           break;
-       }
        
+       //twitterアクション挿入
+       $twitter = new TwitterOAuth(
+                config('twitter.consumer_key'),
+                config('twitter.consumer_secret')
+            );
+            # 認証用のrequest_tokenを取得
+            # このとき認証後、遷移する画面のURLを渡す
+            $token = $twitter->oauth('oauth/request_token', array(
+                'oauth_callback' => config('twitter.callback_url')
+            ));
+    
+            # 認証画面で認証を行うためSessionに入れる
+            session(array(
+                'oauth_token' => $token['oauth_token'],
+                'oauth_token_secret' => $token['oauth_token_secret'],
+            ));
+    
+            # 認証画面へ移動させる
+            ## 毎回認証をさせたい場合： 'oauth/authorize'
+            ## 再認証が不要な場合： 'oauth/authenticate'
+            $url = $twitter->url('oauth/authenticate', array(
+                'oauth_token' => $token['oauth_token']
+            ));
        
+       //followアクション挿入
+       $twitter = new TwitterOAuth(
+            config('twitter.consumer_key'),
+            config('twitter.consumer_secret'),
+            config('twitter.access_token'),
+            config('twitter.access_token_secret')
+        );
+
       
+      $params = [
+    'cursor' => '-1',
+    'count' => '20',
+    'skip_status' => 'true',
+    //'screen_name' => '...',
+    'user_id' => Auth::user()->twitter_id,
+      ];
+      $followers = [];
+ 
+        do {
+          $response = $twitter->get('friends/list', $params);
+          
+          if (!isset($response->users)) {
+              echo 'TwitterAPIの制限がかかっちゃってる！ごめんなさい！' . PHP_EOL;
+                break;
+          }
+         // \Log::error($response->users); 
+         // \Log::channel('errorlog')->getLogger()->error($response->users);
+          $followers = array_merge($followers, $response->users);
+        //   $params['cursor'] = $response->next_cursor_str;
+        //   $response = $twitter->get('friends/list', $params);
+          
+        //   if (!isset($response)) {
+        //       echo 'TwitterAPIの制限がかかっちゃってる！ごめんなさい！' . PHP_EOL;
+        //       //break;
+        //   }
+          
+        // $followers = array_merge($followers, $response->users);
+          
+        } while ($params['cursor'] = $response->next_cursor_str);
+       //↑ $params['cursor'] に代入しつつカーソルの値をループ条件に使う
+       //\Log::channel('errorlog')->getLogger()->error($followers);
+      // return view('home',["followers" => $followers]);
+       
+       //topページにリダイレクト
+       return redirect('home'); 
    }
    
-  //     public function twitter()
-  //       {
-  //           $twitter = new TwitterOAuth(
-  //               config('twitter.consumer_key'),
-  //               config('twitter.consumer_secret')
-  //           );
-  //           # 認証用のrequest_tokenを取得
-  //           # このとき認証後、遷移する画面のURLを渡す
-  //           $token = $twitter->oauth('oauth/request_token', array(
-  //               'oauth_callback' => config('twitter.callback_url')
-  //           ));
-    
-  //           # 認証画面で認証を行うためSessionに入れる
-  //           session(array(
-  //               'oauth_token' => $token['oauth_token'],
-  //               'oauth_token_secret' => $token['oauth_token_secret'],
-  //           ));
-    
-  //           # 認証画面へ移動させる
-  //           ## 毎回認証をさせたい場合： 'oauth/authorize'
-  //           ## 再認証が不要な場合： 'oauth/authenticate'
-  //           $url = $twitter->url('oauth/authenticate', array(
-  //               'oauth_token' => $token['oauth_token']
-  //           ));
-    
-  //           return redirect('user/follow');
-  //       }
-
-   
-  // public function getFollowList(Request $request)
-  //   {
-  //     $twitter = new TwitterOAuth(
-  //           config('twitter.consumer_key'),
-  //           config('twitter.consumer_secret'),
-  //           config('twitter.access_token'),
-  //           config('twitter.access_token_secret')
-  //       );
-
-      
-  //     $params = [
-  //   'cursor' => '-1',
-  //   'count' => '20',
-  //   'skip_status' => 'true',
-  //   //'screen_name' => '...',
-  //   'user_id' => Auth::user()->twitter_id,
-  //     ];
-  //     $followers = [];
- 
-  //       do {
-  //         $response = $twitter->get('friends/list', $params);
-          
-  //         if (!isset($response->users)) {
-  //             echo 'TwitterAPIの制限がかかっちゃってる！ごめんなさい！' . PHP_EOL;
-  //               break;
-  //         }
-  //       // \Log::error($response->users); 
-  //       // \Log::channel('errorlog')->getLogger()->error($response->users);
-  //         $followers = array_merge($followers, $response->users);
-  //       //   $params['cursor'] = $response->next_cursor_str;
-  //       //   $response = $twitter->get('friends/list', $params);
-          
-  //       //   if (!isset($response)) {
-  //       //       echo 'TwitterAPIの制限がかかっちゃってる！ごめんなさい！' . PHP_EOL;
-  //       //       //break;
-  //       //   }
-          
-  //       // $followers = array_merge($followers, $response->users);
-          
-  //       } while ($params['cursor'] = $response->next_cursor_str);
-  //     //↑ $params['cursor'] に代入しつつカーソルの値をループ条件に使う
-  //     //\Log::channel('errorlog')->getLogger()->error($followers);
-  //     return view('user.profile.follow',["followers" => $followers]);
-  //   }
-    
 }
 
 

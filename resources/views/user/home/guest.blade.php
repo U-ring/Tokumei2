@@ -9,7 +9,7 @@
        </div>
        @auth
         <div>
-            <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="80" height="80">
+            <!--<img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="80" height="80">-->
         </div>
        @endif
      <ul class="list-unstyled">
@@ -21,7 +21,7 @@
     </div>
     <div class="row blank-top col-md-10 mx-auto">
         <p class="h2">友達リスト</p>
-        <p class="blank-top text-left">{{ Auth::User()->twitter_id }}</p>
+        <!--<p class="blank-top text-left">{{ Auth::User()->twitter_id }}</p>-->
     </div>
     <div class="d-flex row col-md-10 mx-auto clearfix">
       <div class="justify-content-start">  
@@ -52,6 +52,7 @@
                 <p>A君</p>
                 <p>B君</p>
                 <p>C君</p>
+                <!--@include('follow.follow_button',['user'=>$user])-->
           </div>
       </div>    
 </div>

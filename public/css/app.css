@@ -11356,3 +11356,14 @@ a.text-dark:focus {
   }
 }
 
+body {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #C0C0C0;
+  color: #000;
+}
+
+gray {
+  background-color: #C0C0C0;
+}
+

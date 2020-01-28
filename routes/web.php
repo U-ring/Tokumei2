@@ -31,6 +31,16 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('user/TermsOfService','User\UserController@TermsOfService')->middleware('auth');
 });
 
+Route::group(['prefix' => 'users/{id}'], function () {
+    Route::get('followings', 'UsersController@followings')->name('followings');
+    Route::get('followers', 'UsersController@followers')->name('followers');
+    });
+    
+Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('follow', 'UserFollowController@store')->name('follow');
+        Route::delete('unfollow', 'UserFollowController@destroy')->name('unfollow');
+    });
+
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/login/{social}', 'Auth\OAuthLoginController@socialLogin');
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
@@ -43,4 +53,5 @@ Route::get('user/twitter','Auth\OAuthLoginController@twitter');
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
 
 Auth::routes();
-Route::get('/','HomeController@index');
+Route::get('/','HomeController@index')->middleware('auth');//←ようこそ、のページ
+Route::get('/home','HomeController@index');

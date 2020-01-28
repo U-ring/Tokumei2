@@ -16,7 +16,7 @@
       @endif
      <ul class="list-unstyled">
        <li><p class="h3 blank-top">{{ Auth::user()->name }}</p></li>
-       <li class="blank-top"><p>プロフィール文</p></li>
+       <li class="blank-top"><p>プロフィール文{{ Auth::id() }}</p></li>
        <li><p>Twitterでログインしています</p></li>
        <li><p>Instagramでログインしています</p></li> 
      </ul>
@@ -24,7 +24,7 @@
   <div class="row blank-top col-md-10 mx-auto">
       <div class="col-md-12">
         <p class="h2">友達リスト</p>
-        <p class="blank-top">{{ Auth::User()->twitter_id }}</p>
+        <p class="blank-top">{{ $friend }}</p>
       </div>
   </div>
   <div class="d-flex row col-md-10 mx-auto clearfix">
@@ -58,6 +58,7 @@
           <p>{{ $user->name }}</p>
           @endforeach
       </div>
+      @include('follow.follow_button',['user'=>$user])
       </div>    
 </div>
 <div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>

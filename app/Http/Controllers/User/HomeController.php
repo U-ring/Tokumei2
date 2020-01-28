@@ -4,21 +4,20 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\User;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 class HomeController extends Controller
 {
-    //
-    public function hello()
-    {
-      return view('user.home.hello');
-    }
     
     public function guest()
   {
-    return view('user.home.guest');
+    $user = Auth::user();
+    
+    return view('user.home.guest',['user' => $user]);
   }
     
     public function facebook()
@@ -99,13 +98,16 @@ class HomeController extends Controller
     }else{
        \Session::get('followers', 'followを取得できませんでした。');   
     }
-    \Debugbar::info($followers); 
-    return view('user.home.twitter',["followers" => $followers]);
+    
+    $friend = User::where('id')->get();
+    \Debugbar::info($friend); 
+    
+    return view('user.home.twitter',["followers" => $followers, "user" => Auth::user() ,"friend" => $friend]);
   }
   
   public function talk()
   {
     return view('user.home.talk');
   }
-    
+
 }

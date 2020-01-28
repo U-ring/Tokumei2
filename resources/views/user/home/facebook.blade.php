@@ -16,6 +16,7 @@
       @endif
      <ul class="list-unstyled">
        <li><p class="h3 blank-top">{{ Auth::user()->name }}</p></li>
+       <li><p>ユーザー番号：{{ Auth::id() }}</p></li>
        <li class="blank-top"><p>プロフィール文</p></li>
        <li><p>Twitterでログインしています</p></li>
        <li><p>Instagramでログインしています</p></li> 
@@ -24,7 +25,7 @@
     <div class="row blank-top col-md-10 mx-auto">
       <div class="col-md-12">
         <p class="h2">友達リスト</p>
-        <p class="blank-top">{{ Auth::User()->twitter_id }}</p>
+        <p class="blank-top">A君</p>
       </div>
     </div>
     <div class="d-flex row col-md-10 mx-auto clearfix">
@@ -52,9 +53,10 @@
          </div>
         </form>
       <div data-spy="scroll" class="blank-top scrollspy-example justify-content-end">
-        <p class="h2">知り合いかも？</p>
-        <p>A君</p>
-        <p>B君</p>
+        <p class="h2">The user who are your friend in Facebook</p>
+        <p>Mr. A</p>
+        <p>Ms. B</p>
+        <p>Mr. C</p>
       </div>
       </div>    
 </div>
