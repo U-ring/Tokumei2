@@ -31,9 +31,9 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('user/TermsOfService','User\UserController@TermsOfService')->middleware('auth');
 });
 
-Route::group(['prefix' => 'users/{id}'], function () {
-    Route::get('followings', 'UsersController@followings')->name('followings');
-    Route::get('followers', 'UsersController@followers')->name('followers');
+Route::group(['prefix' => 'user/home/{id}'], function () {
+    Route::get('followings', 'User\HomeController@followings')->name('followings');
+    Route::get('followers', 'User\HomeController@followers')->name('followers');
     });
     
 Route::group(['prefix' => 'users/{id}'], function () {
@@ -55,3 +55,4 @@ Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProvider
 Auth::routes();
 Route::get('/','HomeController@index')->middleware('auth');//←ようこそ、のページ
 Route::get('/home','HomeController@index');
+

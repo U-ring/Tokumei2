@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\User;
+use App\Follow;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 class HomeController extends Controller
@@ -16,8 +17,10 @@ class HomeController extends Controller
     public function guest()
   {
     $user = Auth::user();
+    $friends = $user->mutual_follows();
+    // dd($friends);
     
-    return view('user.home.guest',['user' => $user]);
+    return view('user.home.guest',['user' => $user ,'friends' => $friends]);
   }
     
     public function facebook()
@@ -109,5 +112,33 @@ class HomeController extends Controller
   {
     return view('user.home.talk');
   }
+  
+  public function followings($id)//$idという引数を撮ってるからアクションではない。使われていない。
+    {
+        $user = User::find($id);
+        // $followings = $user->followings()->paginate(9);
+        $followings = Auth::user()->followings;
+        // User::find(Auth::id())->follows;
+        $data = [
+            'user' => $user,
+            'users' => $followings,
+        ];
 
+        $data += $this->counts($user);
+       
+        return view('user.home.followings', $data);
+    }
+    
+  public function followers($id)
+    {
+        $user = User::find($id);
+        $followers = $user->followers();
+        $data = [
+            'user' => $user,
+            'users' => $followers,
+        ];
+
+        $data += $this->counts($user);
+        return view('user.home.followers', $data);
+    }
 }

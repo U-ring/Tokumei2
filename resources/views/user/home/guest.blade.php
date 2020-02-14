@@ -15,13 +15,24 @@
      <ul class="list-unstyled">
        <li><p class="h3 blank-top">{{ Auth::user()->name }}</p></li>
        <li class="blank-top"><p>プロフィール文</p></li>
-       <li><p>Twitterでログインしています</p></li>
-       <li><p>Instagramでログインしています</p></li> 
      </ul>
     </div>
     <div class="row blank-top col-md-10 mx-auto">
-        <p class="h2">友達リスト</p>
-        <!--<p class="blank-top text-left">{{ Auth::User()->twitter_id }}</p>-->
+      <p class="h2">相互フォローリスト</p>
+    </div>
+    <div class="row blank-top col-md-10 mx-auto">
+     <table>
+       <tr>
+         <th>ユーザー名</th>
+       </tr>
+       <tbody>
+         @foreach((array)$friends as $friend)
+          <tr>
+           <td>{{ $friend->name}}</td>
+          </tr>
+         @endforeach                    
+       </tbody>
+     </table>
     </div>
     <div class="d-flex row col-md-10 mx-auto clearfix">
       <div class="justify-content-start">  
