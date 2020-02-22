@@ -16,58 +16,46 @@
        <li><p class="h3 blank-top">{{ Auth::user()->name }}</p></li>
        <li class="blank-top"><p>プロフィール文</p></li>
      </ul>
-    </div>
-    <div class="row blank-top col-md-10 mx-auto">
-      <p class="h2">相互フォローリスト</p>
-    </div>
-    <div class="row blank-top col-md-10 mx-auto">
-     <table>
-       <tr>
-         <th>ユーザー名</th>
-       </tr>
-       <tbody>
-         @foreach((array)$friends as $friend)
+    <div class="row">
+      <div class="row blank-top col-md-10">
+       <p class="h3 px-4">友達</p>
+       <table>
+         <tr>
+           <th>ユーザー名</th>
+         </tr>
+         <tbody>
+           @foreach((array)$users as $user)
+            <tr>
+             <td>{{ $user->name}}</td>
+            </tr>
+           @endforeach                    
+         </tbody>
+       </table>
+      </div>
+      <div class="col-md-10">
+        <table>
           <tr>
-           <td>{{ $friend->name}}</td>
+            <th>グループ名</th>
           </tr>
-         @endforeach                    
-       </tbody>
-     </table>
+          <tbody>
+            @foreach($groups as $item)
+            <tr>
+              <td>{{ }}</td>
+              <!--<td>{{ $group->$users()->name }}</td>-->
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="d-flex row col-md-10 mx-auto clearfix">
-      <div class="justify-content-start">  
-        <form>
-         <div class="col-md-8 blank-top">
-           <ul class="list-inline">
-             <li class="list-inline-item">
-               <input type="text" class="form-control">
-             </li>
-             <li class="list-inline-item">
-               <a href="#">作成</a>
-             </li>
-           </ul>
-         </div>
-         <div class="col-md-8 blank-top">
-           <ul class="list-inline">
-            <li class="list-inline-item">
-              <input type="text" class="form-control">
-            </li>
-            <li class="list-inline-item">
-              <a href="#">作成</a>
-            </li>
-           </ul>            
-         </div>
-        </form>
-          <div data-spy="scroll" class="blank-top scrollspy-example justify-content-end">
-                <p class="h2">知り合いかも？</p>
-                <p>A君</p>
-                <p>B君</p>
-                <p>C君</p>
-                <!--@include('follow.follow_button',['user'=>$user])-->
-          </div>
-      </div>    
+    
+    <div class="row blank-top col-md-10 mx-auto">
+      <a class="btn btn-primary m-3" href="/user/group/create">グループを作成する</a>
+      <a class="btn btn-primary m-3" href="/user/community/create">コミュニティを作成する</a>
+    </div>
+      <a class="btn btn-primary m-3" href="/logout">ログアウト</a>
 </div>
-<div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>
+
 @endsection
 
 

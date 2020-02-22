@@ -10,6 +10,8 @@ use Auth;
 use App\User;
 use App\Follow;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Group;
+use App\GroupUser;
 
 class HomeController extends Controller
 {
@@ -17,10 +19,15 @@ class HomeController extends Controller
     public function guest()
   {
     $user = Auth::user();
-    $friends = $user->mutual_follows();
-    // dd($friends);
+    $users = $user->mutual_follows();
     
-    return view('user.home.guest',['user' => $user ,'friends' => $friends]);
+    // $groups = GroupUser::groupsOnUser(Auth::id());
+    // $groups = $user->groups;//ログイン中のユーザーの所属グループを取得。
+    $groups = $user->groups;//これはcollection
+    // dd($groups);
+    
+    return view('user.home.guest',['user' => $user ,'users' => $users ,'groups'=>$groups]);
+    // return view('user.home.guest',['user' => $user ,'users' => $users ]);//テスト用
   }
     
     public function facebook()

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameUserFollowToFollowsTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class RenameUserFollowToFollowsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('user_follow','follows');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('note')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,8 +28,6 @@ class RenameUserFollowToFollowsTable extends Migration
      */
     public function down()
     {
-        Schema::table('follows', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('groups');
     }
 }

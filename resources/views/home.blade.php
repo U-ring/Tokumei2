@@ -32,12 +32,13 @@
        @foreach($users as $user)
         <tr>
          <td>{{ $user->name}}</td>
-         <td><div>@include('follow.follow_button',['user'=>$user])</div></td>
+         <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
         </tr>
        @endforeach                    
      </tbody>
    </table>
  </div>
+  <a class="btn btn-primary m-3" href="/user/group/create">グループを作成する</a>
  <div>
   <ul class="nav nav-tabs nav-justified mt-5 mb-2">
    <li class="nav-item nav-link {{ Request::is('users/*/followers') ? 'active' : '' }} "><a href="{{ route('followers',['id'=>$user->id]) }}" class="">フォロワー<br><div class="badge badge-secondary"></div></a></li>

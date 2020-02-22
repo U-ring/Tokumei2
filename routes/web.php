@@ -23,6 +23,8 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('home/twitter','User\HomeController@twitter')->middleware('auth');
   Route::get('home/facebook','User\HomeController@facebook')->middleware('auth');
   Route::get('home/talk','User\HomeController@talk')->middleware('auth');
+  Route::get('group/create','User\GroupController@add')->middleware('auth');
+  Route::post('group/create','User\GroupController@create')->middleware('auth');
   Route::get('group/talk','User\GroupController@talk')->middleware('auth');
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');

@@ -104,4 +104,9 @@ class User extends Authenticatable
           Follow::destroy($follow->id);
         }
     }
+    
+    public function groups()
+    {
+      return $this->belongsToMany('\App\Group','group_user');
+    }
 }

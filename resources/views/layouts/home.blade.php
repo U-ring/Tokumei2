@@ -57,7 +57,7 @@
               </li>
             </ul>
             {{-- ここまでナビゲーションバー --}}
-            <main class="py-4">
+            <main>
               <div class="container shadow">
                 {{-- コンテンツをここに入れるため、@yieldで空けておきます。 --}}
                 @yield('content')
