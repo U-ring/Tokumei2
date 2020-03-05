@@ -15,22 +15,16 @@
      </ul>
      @endif
      <div class="form-group mx-auto row test">
-       <div class="custom-control custom-radio">
-         <input class="form-check-input" type="checkbox" value={{$user->id}} name="user_id" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
-              {{ $user->name}}
-            </label>
-       </div>
        <table>
          <tbody>
            @foreach((array)$users as $user)
             <tr>
              <td>
-               <div class="custom-control custom-radio">
-                  <!--<input type="radio" id="customRadio1" name="user_id" class="custom-control-input" value={{$user->id}}>-->
-                  <!--<label class="custom-control-label" for="customRadio1">{{ $user->name}}</label>-->
-                  <input class="form-check-input" type="checkbox" value={{$user->id}} name="user_id" id="defaultCheck1">
-                  <label class="form-check-label" for="defaultCheck1">
+               <div class="custom-control custom-checkbox">
+                  {{-- <!--<input type="radio" id="customRadio1" name="user_id" class="custom-control-input" value={{$user->id}}>--> --}}
+                  {{-- <!--<label class="custom-control-label" for="customRadio1">{{ $user->name}}</label>--> --}}
+                  <input class="form-check-input" type="checkbox" value={{$user->id}} name="user_id[]">{{-- データを配列にしてcreate()に飛ばした。--}}
+                  <label class="form-check-label" for="customCheck1">
                     {{ $user->name}}
                   </label>
                </div>

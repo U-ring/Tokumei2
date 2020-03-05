@@ -4,9 +4,9 @@
 
 @section('content')
  <div class="p-10">
-  <p class="display-4 font-weight-bold p-4">ようこそ 匿名会議へ！</p>
+  <p class="display-4 font-weight-bold p-4">ようこそ、 {{ Auth::user()->name }}さん！</p>
   <p class="lead px-4 pt-4">あなたにとって本質的で重要なことであればあるほど、みんなは直接言いづらい。</p>
-  <p class="lead px-4 pb-4">私を使ってコミュニケーションを効率化しませんか？</p>
+  <p class="lead px-4 pb-4">匿名会議を使ってコミュニケーションを効率化しませんか？</p>
  </div>
  <div class="row float-right m-4">
   <form action="{{ action('HomeController@index') }}" method="get">

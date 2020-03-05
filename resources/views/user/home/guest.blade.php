@@ -5,23 +5,23 @@
 @section('content')
 <div class="blank-top col-md-10 mx-auto">
        <div class="text-right">
-         <a class="btn btn-primary blank-top" href="#">編集する</a>
+         <a class="btn btn-primary blank-top" href="/user/profile/edit">編集する</a>
        </div>
        @auth
         <div>
             <!--<img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="80" height="80">-->
         </div>
        @endif
-     <ul class="list-unstyled">
-       <li><p class="h3 blank-top">{{ Auth::user()->name }}</p></li>
-       <li class="blank-top"><p>プロフィール文</p></li>
-     </ul>
-    <div class="row">
+      <div class="col-md-4 mx-auto">
+        <ul class="list-unstyled">
+           <li><p class="h3 font-weight-bold blank-top">{{ Auth::user()->name }}</p></li>
+           <li class="blank-top">{{ Auth::user()->text }}</p></li>
+        </ul>
+      </div>
       <div class="row blank-top col-md-10">
-       <p class="h3 px-4">友達</p>
        <table>
          <tr>
-           <th>ユーザー名</th>
+           <th>フレンド</th>
          </tr>
          <tbody>
            @foreach((array)$users as $user)
@@ -32,22 +32,23 @@
          </tbody>
        </table>
       </div>
-      <div class="col-md-10">
+      <div class="row blank-top col-md-10">
         <table>
           <tr>
             <th>グループ名</th>
           </tr>
           <tbody>
-            @foreach($groups as $item)
+            @foreach($groups as $group)
             <tr>
-              <td>{{ }}</td>
-              <!--<td>{{ $group->$users()->name }}</td>-->
+              <td>{{ $group->name }}</td>
+              <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@edit', ['id' => $group->id]) }}">このグループを編集する</a></td></div>
+              <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@talk', ['id' => $group->id] ) }}">トークを開始する</a></td></div>
+              {{-- <td><a class="btn btn-primary m-3" href="/user/group/edit">このグループを編集する</a></td> --}}
             </tr>
             @endforeach
           </tbody>
         </table>
       </div>
-    </div>
     
     <div class="row blank-top col-md-10 mx-auto">
       <a class="btn btn-primary m-3" href="/user/group/create">グループを作成する</a>

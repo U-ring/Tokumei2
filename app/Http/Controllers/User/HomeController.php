@@ -23,7 +23,7 @@ class HomeController extends Controller
     
     // $groups = GroupUser::groupsOnUser(Auth::id());
     // $groups = $user->groups;//ログイン中のユーザーの所属グループを取得。
-    $groups = $user->groups;//これはcollection
+    $groups = $user->groups;//このデータはcollectionである。
     // dd($groups);
     
     return view('user.home.guest',['user' => $user ,'users' => $users ,'groups'=>$groups]);

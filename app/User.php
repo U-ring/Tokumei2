@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use \App\Follow;
+use \App\Group;
 
 class User extends Authenticatable
 {
@@ -109,4 +110,10 @@ class User extends Authenticatable
     {
       return $this->belongsToMany('\App\Group','group_user');
     }
+    
+    public function messages()
+    {
+      return $this->hasMany('App\Message');
+    }
+    
 }
