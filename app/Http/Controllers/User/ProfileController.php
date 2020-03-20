@@ -13,9 +13,18 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class ProfileController extends Controller
 {
     //
-  public function login()
+  public function profile()
   {
-    return view('user.profile.login');
+    $user = Auth::user();
+    $users = $user->mutual_follows();
+    
+    // $groups = GroupUser::groupsOnUser(Auth::id());
+    // $groups = $user->groups;//ログイン中のユーザーの所属グループを取得。
+    $groups = $user->groups;//このデータはcollectionである。
+    // dd($groups);
+    
+    return view('user.profile.profile',['user' => $user ,'users' => $users ,'groups'=>$groups]);
+    // return view('user.home.guest',['user' => $user ,'users' => $users ]);//テスト用
   }
   
   public function edit()
@@ -37,9 +46,17 @@ class ProfileController extends Controller
       $user->text = $request->text;
     }
     
-    $profile_form = $request->all();
+    if(isset($request['avatar'])) {
+      $path = $request->file('avatar')->store('/public/image');
+      $user->avatar = basename($path);
+    }
     
-    $user->fill($profile_form)->save();
+    // $profile_form = $request->all();
+    // $profile_form = $profile_form + array('avatar'=>$user->avatar);
+    // dd($profile_form);
+    
+    // $user->fill($profile_form)->save();
+    $user->save();
     return redirect('user/home/guest');
   }
   

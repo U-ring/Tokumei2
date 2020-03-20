@@ -20,6 +20,11 @@ class Message extends Model
       return $this->belongsTo('App\User');
     }
     
+    public function getName($userId)
+    {
+      return User::where('id','$userId')->name->get();
+    }
+    
     public function group()//ここもuser()同様。
     {
       return $this->belongsTo('\App\Group');

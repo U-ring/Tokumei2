@@ -19,7 +19,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('profile/login','User\ProfileController@login');
   Route::get('profile/edit','User\ProfileController@edit')->middleware('auth');
   Route::post('profile/update','User\ProfileController@update')->middleware('auth');
-  Route::get('home/guest','User\HomeController@guest')->middleware('auth');
+  Route::get('profile/profile','User\ProfileController@profile')->middleware('auth');
   Route::get('home/twitter','User\HomeController@twitter')->middleware('auth');
   Route::get('home/facebook','User\HomeController@facebook')->middleware('auth');
   Route::get('home/talk','User\HomeController@talk')->middleware('auth');
@@ -29,7 +29,11 @@ Route::group(['prefix' => 'user'], function(){
   Route::post('group/talk','User\GroupController@send')->middleware('auth');
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('group/message','User\GroupController@message');
+//   Route::get('group/message1','User\GroupController@message');
+  Route::post('group/message','User\GroupController@sendM');
+  Route::post('group/talk','User\GroupController@sendM');
   Route::post('group/edit','User\GroupController@update')->middleware('auth');
+  Route::post('group/withdraw','User\GroupController@withdraw')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
   Route::get('user/talk','User\UserController@talk')->middleware('auth');
   Route::get('user/edit','User\UserController@edit')->middleware('auth');

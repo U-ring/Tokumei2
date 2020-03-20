@@ -10,7 +10,20 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ secure_asset('js/app.js') }}" defer>
+        var formdata = new FormData();
+      formdata.append('name', 'knhj');
+
+     var xhttpreq = new XMLHttpRequest();
+     xhttpreq.onreadystatechange = function () {
+        if(xhttpreq.readyState == 4 && xhttpreq.status == 200) { alert(xhttpreq.responseText);}
+        if(xhttpreq.readyState == 4 && xhttpreq.status != 0) {alert("アップロード完了");}
+     };
+     var token = document.getElementsByName('csrf-token').item(0).content; 
+     xhttpreq.open("POST", "ポスト先", true);
+     xhttpreq.setRequestHeader('X-CSRF-Token', token); 
+     xhttpreq.send(formdata);
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

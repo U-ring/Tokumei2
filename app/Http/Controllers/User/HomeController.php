@@ -16,20 +16,6 @@ use App\GroupUser;
 class HomeController extends Controller
 {
     
-    public function guest()
-  {
-    $user = Auth::user();
-    $users = $user->mutual_follows();
-    
-    // $groups = GroupUser::groupsOnUser(Auth::id());
-    // $groups = $user->groups;//ログイン中のユーザーの所属グループを取得。
-    $groups = $user->groups;//このデータはcollectionである。
-    // dd($groups);
-    
-    return view('user.home.guest',['user' => $user ,'users' => $users ,'groups'=>$groups]);
-    // return view('user.home.guest',['user' => $user ,'users' => $users ]);//テスト用
-  }
-    
     public function facebook()
     {
       return view('user.home.facebook');

@@ -1,39 +1,33 @@
 $(function() {
    get_message();
 });
-
 function get_message() {
   $.ajax({
-    url: "/result/ajax/",
+    //url: "/result/ajax/",
+    url: "{{ action('User\GroupController@getMessage') }}",
     dataType: "json",
-    
     success: data => {
-      $("#comment-data")
-          .find(".comment-visible")
+      $("#message-data")
+          .find(".message-visible")
           .remove();
-          
       for (var i = 0; i < data.messages.length; i++) {
          var html = `
-                    
                     <div class="media message-visible">
                       <div class="media-body">
                         <div class="row">
                            <span class="message-body-user">${data.messages[i].name}</span>
                            <span class="message-body-time">${data.messages[i].created_at}</span>
                         </div>
-                        <span class="message-body-content">${data.messages[i].message}</span>
                       </div>
+                      <span class="message-body-content">${data.messages[i].message}</span>
                     </div>
-                    
                     `;
-        $("#comment-data").append(html);
+        $("#message-data").append(html);
       }
     },
-    
     error: () => {
-       alert("ajax Error");
+       //alert("ajax Error");
     }
   });
-  
-  setTimeout("get_message()",5000);
+  setTimeout("get_message()",10000);
 }

@@ -20,6 +20,9 @@
      </ul>
      @endif
      <div class="form-group row">
+      <input type="file" class="form-control-file" name="avatar">
+     </div>
+     <div class="form-group row">
        <input type="text" name="name" value="{{ $user->name }}">
      </div>
      <div class="form-group row">

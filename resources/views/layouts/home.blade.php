@@ -15,6 +15,7 @@
         <!-- Scripts -->
          {{-- Laravel標準で用意されているJavascriptを読み込みます --}}
         <script src="{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ secure_asset('js/message.js') }}" defer></script>
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -44,7 +45,7 @@
             </nav>
             <ul class="nav bg-light h6 p-4">
               <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/guest">Guest</a>
+                <a class="nav-link" href="/user/profile/profile">プロフィール</a>
               </li>
               <li class="nav-item px-2">
                 <a class="nav-link" href="/user/home/facebook">Facebook</a>

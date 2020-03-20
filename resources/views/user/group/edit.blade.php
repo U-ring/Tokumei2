@@ -57,6 +57,13 @@
         <button type="submit" class="m-2 btn btn-primary">編集を完了する</button>
      </div>
    </form>
+   <div>
+     <form action="{{ action('User\GroupController@withdraw')}}" method="post">
+       @csrf
+       <button type="submit" name="id" value="{{ $group_form->id }}" class="m-2 btn btn-danger">退会する</button>
+       {{-- {{ csrf_field() }} --}}
+     </form>
+   </div>
   </div>
 </div>
 @endsection
