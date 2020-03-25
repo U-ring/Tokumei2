@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ secure_asset('js/app.js') }}" defer>
-        var formdata = new FormData();
+      var formdata = new FormData();
       formdata.append('name', 'knhj');
 
      var xhttpreq = new XMLHttpRequest();

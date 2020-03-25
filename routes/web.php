@@ -30,7 +30,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('group/message','User\GroupController@message');
 //   Route::get('group/message1','User\GroupController@message');
-  Route::post('group/message','User\GroupController@sendM');
+  Route::post('group/message','User\GroupController@sendC');
   Route::post('group/talk','User\GroupController@sendM');
   Route::post('group/edit','User\GroupController@update')->middleware('auth');
   Route::post('group/withdraw','User\GroupController@withdraw')->middleware('auth');

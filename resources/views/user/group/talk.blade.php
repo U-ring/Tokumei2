@@ -120,7 +120,7 @@ function get_message() {
         },
         // 通信失敗時の処理
         error: function(xhr, textStatus, error) {
-            alert('NG...');
+            alert('送信できませんでした。');
         }
     });
     // …

@@ -2,7 +2,7 @@
 
 
 {{-- talk.blade.php(layouts)の@yield('title')に'匿名トーク'を埋め込む --}}
-@section('title', 'テストメッセージ')
+@section('title', 'メッセージ')
 
 @section('nameOf')
   <p class="h3 mx-auto">{{ $group->name }}</p>
@@ -73,42 +73,71 @@ function get_message() {
 @endsection
 
 @section('form')
-    <form id="message_form" name="message_form" class="form-inline d-flex method="post" justify-content-between" enctype="multipart/form-data">
+    <form id="message_form" action="{{ action('User\GroupController@sendC') }}" name="message_form" class="form-inline d-flex method="post" justify-content-between" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group row px-2 mx-2">
         {{-- <textarea class="form-control" id="message" name="message" placeholder="push massage (shift + Enter)"aria-label="With textarea"onkeydown="if(event.shiftKey&&event.keyCode==13){document.getElementById('submit').click();return false};"></textarea> --}}
           <input type="text" id = "message" name="message" >
         </div>
         <div class="py-2 form-group row mx-2">
-            <input type="file" class="form-control-file" name="image">{{-- ※name属性あとで弄ろう --}}
+            <input type="file" class="form-control-file" id="image" name="image">
         </div>
         <div class="form-group row float-right">
           <input type="hidden" name="group_id" value={{ $group->id }}>    
-          {{-- <input type="button" id = "button1" class="btn btn-primary" value="送信する"> --}}
-          <button id="button" class="send" type="submit" name="send">送信する</button>
+          <input type="submit" id = "submit" class="btn btn-primary submit" value="送信する"> 
+          {{-- <button type="submit" onclick="send();">送信する</button> --}}
         </div>
     </form>
     <script>
-       $('.send').on('click', function(e) {
-            // var formdata = new FormData($('#message_form').get(0));
-            // console.log(formdata)
-            // var obj = document.forms["message_form"];
-            // console.log(obj)
-            e.preventDefault();
-          $.ajax({
-            url : "{{ action('User\GroupController@sendM') }}",//このアクションでテーブルに保存
-            contentType: 'application/json',
-            dataType :"json",
-            type :"POST",
-            data: JSON.stringify({ 
-              // formdata: $(obj).serialize()
-              message: $('.message').val()
-            }),
-            processData: false,
-            headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            success: get_message()
-           });
-          });
+          $('#message_form').submit(function(event) {
+    // HTMLでの送信をキャンセル
+    event.preventDefault();
+    let $image = $('input[name="image"]');
+    var $form = $(this);
+    var $button = $form.find('.submit');
+    var formdata = new FormData($('#message_form').get(0));
+    formdata.append("image", $image.prop('files')[0]);
+    console.log('aaaaaaaaaaaaa');
+    console.log(formdata.get('image'));
+    console.log($form.serialize());
+    console.log(formdata);
+    $.ajax({
+        headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  },
+        url: "{{ action('User\GroupController@sendC') }}",
+        type: "POST",
+        dataType: "html",
+        processData: false,
+        contentType: false,
+        data: $form.serialize(),
+              formdata,
+        timeout: 10000,  // 単位はミリ秒
+        // 送信前
+        beforeSend: function(xhr, settings) {
+            // ボタンを無効化し、二重送信を防止
+            $button.attr('disabled', true);
+        },
+        // 応答後
+        complete: function(xhr, textStatus) {
+            // ボタンを有効化し、再送信を許可
+            $button.attr('disabled', false);
+        },
+        // 通信成功時の処理
+        success: function(result, textStatus, xhr) {
+            // 入力値を初期化
+            $form[0].reset();
+            // $("#result").append(result);
+              $(function() {
+               get_message();
+            });
+        },
+        // 通信失敗時の処理
+        error: function(xhr, textStatus, error) {
+            alert('送信できませんでした。');
+        }
+    });
+    // …
+  });
     </script>
 @endsection

@@ -70,7 +70,7 @@ class GroupController extends Controller
     public function message()
   {
     $group = Group::find(1);
-    return view('user.group.message1',['group' => $group]);
+    return view('user.group.message',['group' => $group]);
   }
   
   public function send(Request $request)
@@ -124,8 +124,7 @@ class GroupController extends Controller
   
   public function sendM(Request $request)
   {
-    // $this->validate($request, ['message'=>'required']);
-    
+    $this->validate($request, ['message'=>'required']);
     $user = Auth::user();
     $message = new Message;
     
@@ -140,7 +139,7 @@ class GroupController extends Controller
     // $message->save();
     // Log::info("★★★★★★★★★");
     // Log::info($messagef);
-    // ↓message1
+    
      ini_set('display_errors','no');
       if($_POST){
       	$messagef = $_POST['message'];
@@ -148,6 +147,43 @@ class GroupController extends Controller
       	Log::debug($messagef);
       	$message->save();
       }
+  }
+  
+    public function sendC(Request $request)
+  {
+    // $file_tmp  = $_FILES["image"]["tmp_name"];
+    // $file_save = "public/image" . $_FILES["image"]["name"];
+    // $result = @move_uploaded_file($file_tmp, $file_save);
+    
+    // if ( $result === true ) {
+    //     $message->image_path = basename($file_save);
+    // } else {
+    //     echo "UPLOAD NG";
+    // }
+    $upfile = $request;
+    Log::info(var_dump($request));
+    $this->validate($request, ['message'=>'required']);
+    $user = Auth::user();
+    $message = new Message;
+    
+    $message->user_id = $user->id;
+
+    $message->group_id = 1;
+
+    $messagef = $_POST['message'];
+    $message->message = $messagef;
+
+    $form = $request->all();
+    // Log::debug($form);
+    if (isset($form['image'])) {
+      // \Log::info($image);
+      $path = $request->file('image')->store('public/image');
+      $message->image_path = basename($path);
+    } else {
+      $message->image_path = null;
+    }
+    
+    $message->save();
   }
 
   public function edit(Request $request)
