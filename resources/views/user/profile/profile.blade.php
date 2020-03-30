@@ -12,10 +12,14 @@
           <div class="float-left rounded-circle p-1 shadow-lg">
             <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="150" height="150">
           </div>
-       </div>    
+       </div>
           @elseif($user->avatar)
           <div class="col-md-12 row">
-            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="150" height="150"></div>
+            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="150" height="150"></div>
+          </div>
+          @elseif(!isset($user->avatar))
+          <div class="col-md-12 row">
+            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ asset('storage/image/' . 'Q00BoKegdjI7Yej1AxIHhmN0tKcwTzQEupTUdLsJ.jpeg') }}" class="rounded-circle" width="150" height="150"></div>            
           </div>
           @else
        @endif
@@ -35,7 +39,7 @@
               <tr>
                <td>{{ $user->name}}</td>
               </tr>
-             @endforeach                    
+             @endforeach
            </tbody>
          </table>
         </div>
@@ -55,7 +59,7 @@
           </tbody>
         </table>
       </div>
-    
+
     <div class="row blank-top col-md-10 mx-auto">
       <a class="btn btn-primary m-3" href="/user/group/create">グループを作成する</a>
       <a class="btn btn-primary m-3" href="/user/community/create">コミュニティを作成する</a>
@@ -64,6 +68,3 @@
 </div>
 
 @endsection
-
-
-                        

@@ -10,7 +10,7 @@
  </div>
  <div class="row float-right m-4">
   <form action="{{ action('HomeController@index') }}" method="get">
-   <div class="form-group row"> 
+   <div class="form-group row">
     <label>ユーザー検索</label>
     <div>
      <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
@@ -40,14 +40,21 @@
         </tr>
         @elseif(isset($user->avatar))
         <tr>
-         <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+         <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+         <td>{{ $user->name }}</td>
+         <td>{{ $user->text }}</td>
+         <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
+        </tr>
+        @elseif(!isset($user->avatar))
+        <tr>
+         <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'Q00BoKegdjI7Yej1AxIHhmN0tKcwTzQEupTUdLsJ.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
          <td>{{ $user->name }}</td>
          <td>{{ $user->text }}</td>
          <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
         </tr>
         @else
-       @endif 
-       @endforeach                    
+       @endif
+       @endforeach
      </tbody>
    </table>
  </div>
@@ -60,4 +67,3 @@
  </div>
  <div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>
 @endsection
-

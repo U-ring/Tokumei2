@@ -14,7 +14,7 @@
 
         <!-- Scripts -->
          {{-- Laravel標準で用意されているJavascriptを読み込みます --}}
-        <script src="{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -22,10 +22,10 @@
 
         <!-- Styles -->
         {{-- Laravel標準で用意されているCSSを読み込みます --}}
-        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-        
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         {{-- この章の後半で作成するCSSを読み込みます --}}
-        <link href="{{ secure_asset('css/admin.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     </head>
     <body>
         <div id="app jumbotron">
@@ -38,14 +38,14 @@
                           {{ config('app.name', 'laravel') }}</a>
                     </div>
                         <div class="text-right">
-                          <a class="navbar-brand" href="{{ url('/') }}">Nistagram!</a>    
+                          <a class="navbar-brand" href="{{ url('/') }}">Nistagram!</a>
                         </div>
                   </div>
-                </div>        
+                </div>
             </nav>
             <ul class="nav bg-light h6 p-4">
               <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/guest">Guest</a>
+                <a class="nav-link" href="/user/profile/profile">プロフィール</a>
               </li>
               <li class="nav-item px-2">
                 <a class="nav-link" href="/user/home/facebook">Facebook</a>
@@ -60,18 +60,18 @@
             {{-- ここまでナビゲーションバー --}}
             <main>
               <div class="container shadow">
-                
+
                     <div class="p-3 blank-top row shadow">
                       @yield('nameOf')
                     </div>
                     <div class="row p-4">
-                      @yield('message')       
+                      @yield('message')
                     </div>
                     <div class="p-4 shadow">
                       @yield('form')
-                    </div>  
-               
-              </div>  
+                    </div>
+
+              </div>
             </main>
         </div>
     </body>

@@ -11,7 +11,7 @@
 @section('message')
 <div class="container">
   <div id="message-data">
-    
+
   </div>
 </div>
 {{-- <script src="{{ asset('js/message.js') }}"></script> --}}
@@ -30,7 +30,7 @@ function get_message() {
           .find(".message-visible")
           .remove();
       for (var i = 0; i < data.messages.length; i++) {
-        
+
         if(null == data.messages[i].image) {
           var html =`
                     <div class="media message-visible">
@@ -52,15 +52,15 @@ function get_message() {
                            <span class="message-body-user">${data.messages[i].name}</span>
                            <span class="message-body-content">${data.messages[i].message}</span>
                         </div>
-                        <img src="{{ secure_asset('storage/image/${data.messages[i].image}')}}" class="rounded"> 
+                        <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded"> 
                       </div>
                       <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
           `;
           $("#message-data").append(html);
-          
+
         }
-        
+
       }
     },
     error: () => {
@@ -83,9 +83,9 @@ function get_message() {
             <input type="file" class="form-control-file" name="image">{{-- ※name属性あとで弄ろう --}}
         </div>
         <div class="form-group row float-right">
-          <input type="hidden" name="group_id" value={{ $group->id }}>    
+          <input type="hidden" name="group_id" value={{ $group->id }}>
           <input type="submit" id = "submit" class="btn btn-primary submit" value="送信する">
-          
+
         </div>
     </form>
     <script>

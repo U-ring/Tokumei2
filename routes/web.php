@@ -29,7 +29,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::post('group/talk','User\GroupController@send')->middleware('auth');
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('group/message','User\GroupController@message');
-//   Route::get('group/message1','User\GroupController@message');
+  Route::post('group/message/sendC','User\GroupController@sendC');
   Route::post('group/message','User\GroupController@sendC');
   Route::post('group/talk','User\GroupController@sendM');
   Route::post('group/edit','User\GroupController@update')->middleware('auth');
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'user/home/{id}'], function () {
     Route::get('followings', 'User\HomeController@followings')->name('followings');
     Route::get('followers', 'User\HomeController@followers')->name('followers');
     });
-    
+
 Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('unfollow');
@@ -66,4 +66,3 @@ Route::get('/result/ajax', 'User\GroupController@getMessage');
 Auth::routes();
 Route::get('/','HomeController@index')->middleware('auth');//←ようこそ、のページ
 Route::get('/home','HomeController@index');
-
