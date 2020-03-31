@@ -16,3 +16,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/admin.scss', 'public/css');
 
 mix.js('resources/js/message.blade.js', 'public/js');
+mix.js('resources/js/talk.blade.js', 'public/js');

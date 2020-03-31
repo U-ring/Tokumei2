@@ -29,6 +29,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::post('group/talk','User\GroupController@send')->middleware('auth');
   Route::get('group/edit','User\GroupController@edit')->middleware('auth');
   Route::get('group/message','User\GroupController@message');
+  Route::get('group/chat','User\GroupController@message');
   Route::post('group/message/sendC','User\GroupController@sendC');
   Route::post('group/message','User\GroupController@sendC');
   Route::post('group/talk','User\GroupController@sendM');

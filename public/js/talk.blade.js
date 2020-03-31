@@ -81,77 +81,51 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/message.blade.js":
-/*!***************************************!*\
-  !*** ./resources/js/message.blade.js ***!
-  \***************************************/
+/***/ "./resources/js/talk.blade.js":
+/*!************************************!*\
+  !*** ./resources/js/talk.blade.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$('#message_form').submit(function (event) {
-  // HTMLでの送信をキャンセル
-  event.preventDefault();
-  var $image = $('input[name="image"]');
-  var $form = $(this);
-  var $button = $form.find('.submit');
-  var formdata = new FormData($('#message_form').get(0));
-  formdata.append("image", $image.prop('files')[0]);
-  console.log(formdata.get('image'));
-  console.log($form.serialize());
-  console.log(formdata);
+$(function () {
+  sendform();
+});
+
+function sendform() {
+  // フォームデータを取得
+  var formdata = new FormData($('#message_form').get(0)); // POSTでアップロード
+
   $.ajax({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
     url: "/user/group/message/sendC",
     type: "POST",
-    dataType: "html",
+    data: formdata,
+    cache: false,
+    contentType: false,
     processData: false,
-    data: $form.serialize(),
-    formdata: formdata,
-    timeout: 10000,
-    // 単位はミリ秒
-    // 送信前
-    beforeSend: function beforeSend(xhr, settings) {
-      // ボタンを無効化し、二重送信を防止
-      $button.attr('disabled', true);
-    },
-    // 応答後
-    complete: function complete(xhr, textStatus) {
-      // ボタンを有効化し、再送信を許可
-      $button.attr('disabled', false);
-    },
-    // 通信成功時の処理
-    success: function success(result, textStatus, xhr) {
-      // 入力値を初期化
-      $form[0].reset(); // $("#result").append(result);
-
-      $(function () {
-        get_message();
-      });
-    },
-    // 通信失敗時の処理
-    error: function error(xhr, textStatus, _error) {
-      alert('送信できませんでした。');
-    }
-  }); // …
-});
+    dataType: "html"
+  }).done(function (data, textStatus, jqXHR) {
+    get_message();
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    alert("fail");
+  });
+}
 
 /***/ }),
 
-/***/ 1:
-/*!*********************************************!*\
-  !*** multi ./resources/js/message.blade.js ***!
-  \*********************************************/
+/***/ 2:
+/*!******************************************!*\
+  !*** multi ./resources/js/talk.blade.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kanekotakaki/Desktop/techboost/Tokumei/resources/js/message.blade.js */"./resources/js/message.blade.js");
+module.exports = __webpack_require__(/*! /Users/kanekotakaki/Desktop/techboost/Tokumei/resources/js/talk.blade.js */"./resources/js/talk.blade.js");
 
 
 /***/ })
