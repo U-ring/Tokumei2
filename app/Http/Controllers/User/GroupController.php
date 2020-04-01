@@ -70,7 +70,8 @@ class GroupController extends Controller
     public function message()
   {
     $group = Group::find(1);
-    return view('user.group.message',['group' => $group]);
+    
+    return view('user.group.chat',['group' => $group]);
   }
 
   public function send(Request $request)

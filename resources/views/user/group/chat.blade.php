@@ -33,28 +33,32 @@ function get_message() {
 
         if(null == data.messages[i].image) {
           var html =`
-                    <div class="media message-visible m-2">
+                    <div class="media message-visible m-4">
                       <div class="media-body">
+                        <div class="row my-2">
+                           <span class="message-body-user font-weight-bold h4">${data.messages[i].name}</span>
+                           <span class="message-body-time mx-4 h5">${data.messages[i].created_at}</span>
+                        </div>
                         <div class="row">
-                           <span class="message-body-user font-weight-bold">${data.messages[i].name}</span>
-                           <span class="message-body-content mx-4">${data.messages[i].message}</span>
+                          <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
                         </div>
                       </div>
-                      <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
           `;
           $("#message-data").append(html);
         } else{
           var html =`
-                   <div class="media message-visible">
+                   <div class="media message-visible m-4">
                       <div class="media-body">
-                        <div class="row">
-                           <span class="message-body-user font-weight-bold">${data.messages[i].name}</span>
-                           <span class="message-body-content mx-4">${data.messages[i].message}</span>
+                        <div class="row my-2">
+                           <span class="message-body-user font-weight-bold h4">${data.messages[i].name}</span>
+                           <span class="message-body-time mx-4 h5">${data.messages[i].created_at}</span>
                         </div>
-                        <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded">
+                        <div class="row">
+                          <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
+                          <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded float-right m-2" width="400" height="400">
+                        </div>
                       </div>
-                      <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
           `;
           $("#message-data").append(html);
@@ -80,13 +84,43 @@ function get_message() {
           <input type="text" id = "message" name="message" >
         </div>
         <div class="py-2 form-group row mx-2">
-            <input type="file" class="form-control-file" id="image" name="image">
+          <label class="m-2">
+             <span class="btn btn-primary">
+               ファイルを選択
+               <input type="file" class="form-control-file" id="image" name="image" style="display:none">
+             </span>
+          </label>
         </div>
-        <div class="form-group row float-right">
+        <div class="form-group row float-right m-2">
           <input type="hidden" name="group_id" value={{ $group->id }}>
-          <button type="button" onclick="sendform();">送信する</button>
+          {{-- <button type="button" id="send" onclick="sendform();">送信する</button> --}}
+          <input type="button" id="send" onclick="sendform();" class="btn btn-primary" value="送信する">
+          {{-- <input type="submit" id = "submit" class="btn btn-primary submit" value="送信する"> --}}
           {{-- <button type="submit" onclick="send();">送信する</button> --}}
         </div>
     </form>
-<script src="{{ asset('js/talk.blade.js') }}"></script>
+<script>
+$(function () {
+  sendform();
+});
+
+function sendform() {
+  // フォームデータを取得
+  var formdata = new FormData($('#message_form').get(0)); // POSTでアップロード
+  console.log(formdata);
+  $.ajax({
+    url: "/user/group/message/sendC",
+    type: "POST",
+    data: formdata,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "html"
+  }).done(function (data, textStatus, jqXHR) {
+    get_message();
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    alert("fail");
+  });
+}
+</script>
 @endsection

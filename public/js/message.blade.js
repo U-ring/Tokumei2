@@ -108,7 +108,7 @@ $('#message_form').submit(function (event) {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    url: "/user/group/message/sendC",
+    url: "{{ action('User\GroupController@sendC') }}",
     type: "POST",
     dataType: "html",
     processData: false,
