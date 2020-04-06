@@ -70,7 +70,7 @@ class GroupController extends Controller
     public function message()
   {
     $group = Group::find(1);
-    
+
     return view('user.group.chat',['group' => $group]);
   }
 
@@ -98,10 +98,12 @@ class GroupController extends Controller
     return redirect()->action('User\GroupController@talk',['id'=> $request->group_id]);//この行がリロードを引き起こす。
   }
 
-  public function getMessage()
+  public function getMessage(Request $request)
   {
     // $messages = Message::where('group_id','1')->get();
-    $messageRecords = Message::where('group_id','1')->get();
+    $id = $request->input('id');
+    // $id = 3;
+    $messageRecords = Message::where('group_id',$id)->get();
 
     $messages = [];
 
@@ -169,13 +171,13 @@ class GroupController extends Controller
 
     $message->user_id = $user->id;
 
-    $message->group_id = 1;
+    $message->group_id = $_POST['group_id'];
 
     $messagef = $_POST['message'];
     $message->message = $messagef;
 
     $form = $request->all();
-    Log::debug($request->image);
+    Log::debug($message);
     if (isset($form['image'])) {
       // \Log::info($image);
       $path = $request->file('image')->store('public/image');

@@ -2,7 +2,7 @@
 
 
 {{-- talk.blade.php(layouts)の@yield('title')に'匿名トーク'を埋め込む --}}
-@section('title', 'グループトーク')
+@section('title', 'メッセージ')
 
 @section('nameOf')
   <p class="h3 mx-auto">{{ $group->name }}</p>
@@ -17,13 +17,11 @@
 {{-- <script src="{{ asset('js/message.js') }}"></script> --}}
 
 <script>
-  $(function() {
-   get_message();
-});
+
 function get_message() {
   $.ajax({
     //url: "/result/ajax/",
-    url: "{{ action('User\GroupController@getMessage') }}",
+    url: "{{ action('User\GroupController@getMessage',['id'=>$group->id]) }}",
     dataType: "json",
     success: data => {
       $("#message-data")
@@ -33,28 +31,32 @@ function get_message() {
 
         if(null == data.messages[i].image) {
           var html =`
-                    <div class="media message-visible">
+                    <div class="media message-visible m-4">
                       <div class="media-body">
+                        <div class="row my-2">
+                           <span class="message-body-user font-weight-bold h4">${data.messages[i].name}</span>
+                           <span class="message-body-time mx-4 h5">${data.messages[i].created_at}</span>
+                        </div>
                         <div class="row">
-                           <span class="message-body-user">${data.messages[i].name}</span>
-                           <span class="message-body-content">${data.messages[i].message}</span>
+                          <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
                         </div>
                       </div>
-                      <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
           `;
           $("#message-data").append(html);
         } else{
           var html =`
-                   <div class="media message-visible">
+                   <div class="media message-visible m-4">
                       <div class="media-body">
-                        <div class="row">
-                           <span class="message-body-user">${data.messages[i].name}</span>
-                           <span class="message-body-content">${data.messages[i].message}</span>
+                        <div class="row my-2">
+                           <span class="message-body-user font-weight-bold h4">${data.messages[i].name}</span>
+                           <span class="message-body-time mx-4 h5">${data.messages[i].created_at}</span>
                         </div>
-                        <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded"> 
+                        <div class="row">
+                          <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
+                          <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded float-right m-2" width="400" height="400">
+                        </div>
                       </div>
-                      <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
           `;
           $("#message-data").append(html);
@@ -73,57 +75,52 @@ function get_message() {
 @endsection
 
 @section('form')
-    <form id="message_form" action="{{ action('User\GroupController@sendM') }}" name="message_form" class="form-inline d-flex method="post" justify-content-between" enctype="multipart/form-data">
+    <form id="message_form" action="{{ action('User\GroupController@sendC') }}" name="message_form" class="form-inline d-flex method="post" justify-content-between" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group row px-2 mx-2">
         {{-- <textarea class="form-control" id="message" name="message" placeholder="push massage (shift + Enter)"aria-label="With textarea"onkeydown="if(event.shiftKey&&event.keyCode==13){document.getElementById('submit').click();return false};"></textarea> --}}
           <input type="text" id = "message" name="message" >
         </div>
         <div class="py-2 form-group row mx-2">
-            <input type="file" class="form-control-file" name="image">{{-- ※name属性あとで弄ろう --}}
+          <label class="m-2">
+             <span class="btn btn-primary">
+               ファイルを選択
+               <input type="file" class="form-control-file" id="image" name="image" style="display:none">
+             </span>
+          </label>
         </div>
-        <div class="form-group row float-right">
+        <div class="form-group row float-right m-2">
           <input type="hidden" name="group_id" value={{ $group->id }}>
-          <input type="submit" id = "submit" class="btn btn-primary submit" value="送信する">
-
+          {{-- <button type="button" id="send" onclick="sendform();">送信する</button> --}}
+          <input type="button" id="send" onclick="sendform();" class="btn btn-primary" value="送信する">
+          {{-- <input type="submit" id = "submit" class="btn btn-primary submit" value="送信する"> --}}
+          {{-- <button type="submit" onclick="send();">送信する</button> --}}
         </div>
     </form>
-    <script>
-      $('#message_form').submit(function(event) {
-    // HTMLでの送信をキャンセル
-    event.preventDefault();
-    var $form = $(this);
-    var $button = $form.find('.submit');
-    $.ajax({
-        url: "{{ action('User\GroupController@sendM') }}",
-        type: "POST",
-        data: $form.serialize(),
-        timeout: 10000,  // 単位はミリ秒
-        // 送信前
-        beforeSend: function(xhr, settings) {
-            // ボタンを無効化し、二重送信を防止
-            $button.attr('disabled', true);
-        },
-        // 応答後
-        complete: function(xhr, textStatus) {
-            // ボタンを有効化し、再送信を許可
-            $button.attr('disabled', false);
-        },
-        // 通信成功時の処理
-        success: function(result, textStatus, xhr) {
-            // 入力値を初期化
-            $form[0].reset();
-            // $("#result").append(result);
-              $(function() {
-               get_message();
-            });
-        },
-        // 通信失敗時の処理
-        error: function(xhr, textStatus, error) {
-            alert('送信できませんでした。');
-        }
-    });
-    // …
+<script>
+$(function () {
+  sendform();
 });
-    </script>
+
+function sendform() {
+  // フォームデータを取得
+  var formdata = new FormData($('#message_form').get(0)); // POSTでアップロード
+  for (let value of formdata.entries()) {
+    console.log(value);
+}
+  $.ajax({
+    url: "/user/group/message/sendC",
+    type: "POST",
+    data: formdata,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "html"
+  }).done(function (data, textStatus, jqXHR) {
+    get_message();
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    alert("fail");
+  });
+}
+</script>
 @endsection

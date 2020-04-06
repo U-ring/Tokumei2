@@ -151,7 +151,7 @@ $('#message_form').submit(function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kanekotakaki/Desktop/techboost/Tokumei/resources/js/message.blade.js */"./resources/js/message.blade.js");
+module.exports = __webpack_require__(/*! /Users/kanekotakaki/Desktop/techboost/Tokumei2/resources/js/message.blade.js */"./resources/js/message.blade.js");
 
 
 /***/ })

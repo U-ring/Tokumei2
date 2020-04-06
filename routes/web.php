@@ -35,6 +35,13 @@ Route::group(['prefix' => 'user'], function(){
   Route::post('group/talk','User\GroupController@sendM');
   Route::post('group/edit','User\GroupController@update')->middleware('auth');
   Route::post('group/withdraw','User\GroupController@withdraw')->middleware('auth');
+  Route::get('community/create','User\CommunityController@add')->middleware('auth');
+  Route::post('community/create','User\CommunityController@create')->middleware('auth');
+  Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
+  Route::post('community/talk','User\GroupController@sendC');
+  Route::get('community/edit','User\CommunityController@edit')->middleware('auth');
+  Route::post('community/update','User\CommunityController@update')->middleware('auth');
+  Route::post('community/withdraw','User\CommunityController@withdraw')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
   Route::get('user/talk','User\UserController@talk')->middleware('auth');
   Route::get('user/edit','User\UserController@edit')->middleware('auth');
