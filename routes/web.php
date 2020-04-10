@@ -38,12 +38,15 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('community/create','User\CommunityController@add')->middleware('auth');
   Route::post('community/create','User\CommunityController@create')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
-  Route::post('community/talk','User\GroupController@sendC');
+  Route::post('community/talk','User\CommunityController@talk')->middleware('auth');
+  Route::post('community/message/sendC','User\CommunityController@sendC');
   Route::get('community/edit','User\CommunityController@edit')->middleware('auth');
   Route::post('community/update','User\CommunityController@update')->middleware('auth');
   Route::post('community/withdraw','User\CommunityController@withdraw')->middleware('auth');
-  Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
+  Route::get('user/index','User\UserController@index')->middleware('auth');//←ようこそ、のページ
   Route::get('user/talk','User\UserController@talk')->middleware('auth');
+  Route::post('user/talk','User\UserController@talk')->middleware('auth');//この行がないと、「action User\UserController@talk   undefinedになる。」
+  Route::post('user/message/sendC','User\UserController@sendC')->middleware('auth');
   Route::get('user/edit','User\UserController@edit')->middleware('auth');
   Route::get('user/TermsOfService','User\UserController@TermsOfService')->middleware('auth');
 });
@@ -70,6 +73,8 @@ Route::get('user/twitter','Auth\OAuthLoginController@twitter');
 Route::get('/login/{social}/callback', 'Auth\OAuthLoginController@handleProviderCallback');
 
 Route::get('/result/ajax', 'User\GroupController@getMessage');
+Route::get('/community/result/ajax', 'User\CommunityController@getMessageC');
+Route::get('/user/result/ajax', 'User\UserController@getMessageU');
 
 Auth::routes();
 Route::get('/','HomeController@index')->middleware('auth');//←ようこそ、のページ

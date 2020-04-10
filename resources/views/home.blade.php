@@ -3,67 +3,72 @@
 @section('title.hello')
 
 @section('content')
- <div class="p-10">
-  <p class="display-4 font-weight-bold p-4">ようこそ、 {{ Auth::user()->name }}さん！</p>
-  <p class="lead px-4 pt-4">あなたにとって本質的で重要なことであればあるほど、みんなは直接言いづらい。</p>
-  <p class="lead px-4 pb-4">匿名会議を使ってコミュニケーションを効率化しませんか？</p>
- </div>
- <div class="row float-right m-4">
-  <form action="{{ action('HomeController@index') }}" method="get">
-   <div class="form-group row">
-    <label>ユーザー検索</label>
-    <div>
-     <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
+  <div class="p-10">
+   <p class="display-4 font-weight-bold p-4">ようこそ、 {{ Auth::user()->name }}さん！</p>
+   <p class="lead px-4 pt-4">あなたにとって本質的で重要なことであればあるほど、みんなは直接言いづらい。</p>
+   <p class="lead px-4 pb-4">匿名会議を使ってコミュニケーションを効率化しませんか？</p>
+  </div>
+  <div class="d-flex justify-content-between px-4">
+    <div class="blank-top">
+      <table>
+        <tr>
+          <th></th>
+          <th>グループ</th>
+          <th></th>
+        </tr>
+        <tbody>
+          @foreach($groups as $group)
+          @if(isset($group->image))
+          <tr>
+            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $group->image) }}" class="rounded-circle" width="50" height="50"></div></td>
+            <td>{{ $group->name }}</td>
+            <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@edit', ['id' => $group->id]) }}">編集</a></td></div>
+            <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@talk', ['id' => $group->id] ) }}">トークを開始</a></td></div>
+          </tr>
+          @elseif(!isset($group->image))
+          <tr>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td>{{ $group->name }}</td>
+           <td>{{ $group->text }}</td>
+          </tr>
+          @else
+          @endif
+          @endforeach
+        </tbody>
+      </table>
     </div>
-    <div>
-     {{ csrf_field() }}
-     <input type="submit" class="btn btn-primary" value="検索">
+    <div class="blank-top">
+      <table>
+        <tr>
+          <th></th>
+          <th>コミュニティ</th>
+          <th></th>
+        </tr>
+        <tbody>
+          @foreach($communities as $community)
+          @if(isset($community->image))
+          <tr>
+            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $community->image) }}" class="rounded-circle" width="50" height="50"></div></td>
+            <td>{{ $community->name }}</td>
+            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@edit', ['id' => $community->id]) }}">編集</a></td></div>
+            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@talk', ['id' => $community->id] ) }}">トークを開始</a></td></div>
+          </tr>
+          @elseif(!isset($community->image))
+          <tr>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td>{{ $community->name }}</td>
+           <td>{{ $community->text }}</td>
+          </tr>
+          @else
+          @endif
+          @endforeach
+        </tbody>
+      </table>
     </div>
-   </div>
-  </form>
- </div>
- <div class="row m-4">
-   <table>
-     <tr>
-       <th></th>
-       <th></th>
-       <th></th>
-     </tr>
-     <tbody>
-       @foreach($users as $user)
-       @if(isset($user->facebook_id) or ($user->twitter_id))
-        <tr>
-         <td><div class="rounded-circle shadow-lg p-1"><img class="rounded-circle" src="{{ $user->avatar }}" width="50" height="50"></div></td>
-         <td>{{ $user->name}}</td>
-         <td>{{ $user->text }}</td>
-         <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
-        </tr>
-        @elseif(isset($user->avatar))
-        <tr>
-         <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
-         <td>{{ $user->name }}</td>
-         <td>{{ $user->text }}</td>
-         <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
-        </tr>
-        @elseif(!isset($user->avatar))
-        <tr>
-         <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'Q00BoKegdjI7Yej1AxIHhmN0tKcwTzQEupTUdLsJ.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
-         <td>{{ $user->name }}</td>
-         <td>{{ $user->text }}</td>
-         <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
-        </tr>
-        @else
-       @endif
-       @endforeach
-     </tbody>
-   </table>
- </div>
-  <a class="btn btn-primary m-3" href="/user/group/create">グループを作成する</a>
- <div>
-  <ul class="nav nav-tabs nav-justified mt-5 mb-2">
-   <li class="nav-item nav-link {{ Request::is('users/*/followers') ? 'active' : '' }} "><a href="{{ route('followers',['id'=>$user->id]) }}" class="">フォロワー<br><div class="badge badge-secondary"></div></a></li>
-   <li class="nav-item nav-link {{ Request::is('users/*/followings') ? 'active' : '' }} "><a href="{{ route('followings',['id'=>$user->id]) }}" class="">フォロー中<br><div class="badge badge-secondary"></div></a></li>
-  </ul>
- </div>
- <div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>
+  </div>
+    <div class="row blank-top col-md-10 mx-auto">
+      <a class="btn btn-primary m-3" href="/user/group/create">グループを作成</a>
+      <a class="btn btn-primary m-3" href="/user/community/create">コミュニティを作成</a>
+    </div>　
+  <div class="row m-4"><a class="btn btn-primary m-3" href="/logout">ログアウト</a></div>
 @endsection

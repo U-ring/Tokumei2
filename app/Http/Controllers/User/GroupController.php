@@ -41,6 +41,11 @@ class GroupController extends Controller
       $me = Auth::user();
       $group->user_id = $me->id;
 
+      if(isset($request['avatar'])) {
+        $path = $request->file('avatar')->store('/public/image');
+        $group->image = basename($path);
+      }
+
       $group->save();
 
       $user = new User;
@@ -55,7 +60,7 @@ class GroupController extends Controller
       }
 
 
-      return redirect('user/group/create');
+      return redirect('home');
     }
 
   public function talk(Request $request)
@@ -232,7 +237,7 @@ class GroupController extends Controller
     // $group->fill($group_form)->save();
     $group->save();
 
-    return redirect('user/profile/profile');
+    return redirect('home');
   }
 
   public function withdraw(Request $request)
@@ -243,6 +248,6 @@ class GroupController extends Controller
 
    $user->groups()->detach($group->id);
 
-   return redirect('user/profile/profile');
+   return redirect('home');
   }
 }

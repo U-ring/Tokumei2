@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 use App\User;
 
 class HomeController extends Controller
@@ -24,16 +26,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $cond_name = $request->cond_name;
+      $user = Auth::user();
+      $communities = $user->communities;
+      $groups = $user->groups;//このデータはcollectionである。
 
-        if ($cond_name !='') {
-          $users = User::where('name', $cond_name)->get();
-          // dd($users);
-        }else {
-
-         $users = User::all();
-        }
-
-        return view('home', ['users' => $users, 'cond_name' => $cond_name]);
+        return view('home', ['user' => $user, 'communities' =>$communities, 'groups' => $groups]);
     }
 }

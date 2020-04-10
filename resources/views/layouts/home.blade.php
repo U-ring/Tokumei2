@@ -45,10 +45,10 @@
             </nav>
             <ul class="nav bg-light h6 p-4">
               <li class="nav-item px-2">
-                <a class="nav-link" href="/user/profile/profile">プロフィール</a>
+                <a class="nav-link" href="/user/user/index">フレンド</a>
               </li>
               <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/facebook">Facebook</a>
+                <a class="nav-link" href="/user/profile/profile">プロフィール</a>
               </li>
               <li class="nav-item px-2">
                 <a class="nav-link" href="/user/home/twitter">Twitter</a>

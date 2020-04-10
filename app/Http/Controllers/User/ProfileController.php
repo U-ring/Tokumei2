@@ -16,14 +16,11 @@ class ProfileController extends Controller
   public function profile()
   {
     $user = Auth::user();
-    $users = $user->mutual_follows();
-
     // $groups = GroupUser::groupsOnUser(Auth::id());
     // $groups = $user->groups;//ログイン中のユーザーの所属グループを取得。
-    $groups = $user->groups;//このデータはcollectionである。
     // dd($groups);
 
-    return view('user.profile.profile',['user' => $user ,'users' => $users ,'groups'=>$groups]);
+    return view('user.profile.profile',['user' => $user]);
     // return view('user.home.guest',['user' => $user ,'users' => $users ]);//テスト用
   }
 

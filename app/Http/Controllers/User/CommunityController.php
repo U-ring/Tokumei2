@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\User;
 use App\Community;
+use App\Cmessage;
 
 class CommunityController extends Controller
 {
@@ -35,6 +36,11 @@ class CommunityController extends Controller
 
           $me = Auth::user();
           $community->user_id = $me->id;
+
+          if(isset($request['avatar'])) {
+            $path = $request->file('avatar')->store('/public/image');
+            $community->image = basename($path);
+          }
 
           $community->save();
 
@@ -92,6 +98,11 @@ class CommunityController extends Controller
             }
           }
 
+          if(isset($request['avatar'])) {
+            $path = $request->file('avatar')->store('/public/image');
+            $community->image = basename($path);
+          }
+
           $community->name = $request->name;
           // $group->fill($group_form)->save();
           $community->save();
@@ -119,10 +130,11 @@ class CommunityController extends Controller
           return view('user.community.talk',['community' => $community]);
         }
 
-        public function getMessage()
+        public function getMessageC(Request $request)
         {
           // $messages = Message::where('group_id','1')->get();
-          $messageRecords = Message::where('community_id','1')->get();
+          $id = $request->input('id');
+          $messageRecords = Cmessage::where('community_id',$id)->get();
 
           $messages = [];
 
@@ -150,7 +162,7 @@ class CommunityController extends Controller
         // Log::info(var_dump($request));
         $this->validate($request, ['message'=>'required']);
         $user = Auth::user();
-        $message = new Message;
+        $message = new Cmessage;
 
         $message->user_id = $user->id;
 
@@ -160,7 +172,7 @@ class CommunityController extends Controller
         $message->message = $messagef;
 
         $form = $request->all();
-        Log::debug($request->image);
+        // Log::debug($request->image);
         if (isset($form['image'])) {
           // \Log::info($image);
           $path = $request->file('image')->store('public/image');
