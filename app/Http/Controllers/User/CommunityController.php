@@ -66,24 +66,16 @@ class CommunityController extends Controller
           $community = Community::find($request->id);
 
           $members = $community->users()->get();
-          $users = $user->mutual_follows();
-          // $users = array_diff($members,$friends);
-
+          $friends = $user->mutual_follows();
           foreach ($members as $member) {
-            $test = array('id' => $member->id, 'avatar'=>$member->image_path, 'name' => $member->name, 'text' => $member->text);
+            $cId[] = $member->id;
           }
-          foreach ($users as $user) {
-            $test2 = array('id' => $user->id, 'avatar'=>$user->image_path, 'name' => $user->name, 'text' => $user->text);
+
+          foreach ($friends as $friend) {
+            $fId[] = $friend->id;
           }
-          $test3 = array_diff($test,$test2);
-          Log::debug($test);
-          Log::debug($test2);
-          Log::debug($test3);
-          // foreach ($members as $member) {
-          //   $id[] = $member->id;
-          //   $name[] = $member->name;
-          // }
-          // $users = array_combine($id,$name);
+
+          $users = User::whereIn('id',$fId)->whereNotIn('id',$cId)->get();
 
           return view('user.community.edit', ['community_form' => $community,'user' => $user, 'members'=>$members, 'users' =>$users]);
         }
