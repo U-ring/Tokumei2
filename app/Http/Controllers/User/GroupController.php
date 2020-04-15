@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Follow;
 use Abraham\TwitterOAuth\TwitterOAuth;
@@ -51,14 +52,20 @@ class GroupController extends Controller
       $user = new User;
       // $user = $request->user_id;この2行はダメな例。$userのidカラムに$request->user_idを代入できていない。↓が正しい。
       // $user = User::where('id',$request->user_id);エラー：Call to undefined method Illuminate\Database\Eloquent\Builder::groups()
+      $hash = Hash::make($me->name);
+      $nickname = substr($hash,-10);
+      // Log::debug($nickname);
+      $me->groups()->attach($group->id, ['nickname' => $nickname]);
 
-      $me->groups()->attach($group->id);
       foreach($request->user_id as $item){
 
         $user->id=$item;
-        $user->groups()->attach($group->id);
+        $member = User::find($item);
+        $hashn = Hash::make($member->name);
+        $nickn = substr($hashn,-10);
+        $user->groups()->attach($group->id,['nickname' => $nickn]);
       }
-
+      //66行目'nickname'同じだからエラーくるかも？
 
       return redirect('home');
     }
@@ -109,13 +116,25 @@ class GroupController extends Controller
     $id = $request->input('id');
     // $id = 3;
     $messageRecords = Message::where('group_id',$id)->get();
+    $group = Group::find($id);
+    $members = $group->users()->get();
+    foreach($members as $member){
+      $memId[] = $member->id;
+      $nName[] = $member->pivot->nickname;
+    }
+    $nickname = array_combine($memId,$nName);
+    // Log::debug($nickname);
 
     $messages = [];
 
     foreach($messageRecords as $messageRecord)
     {
+
+      // $ass = $messageRecord->user_id;
+      $name = $nickname[$messageRecord->user_id];
+      // Log::debug($name);
       $item = [
-        'name' => $messageRecord->user->name,
+        'name' => $name,
         'message' => $messageRecord->message,
         'image' => $messageRecord->image_path,
         'created_at' => $messageRecord->created_at
@@ -198,11 +217,20 @@ class GroupController extends Controller
   {
     $user = Auth::user();
     $group = Group::find($request->id);
+    $members = $group->users()->get();
     // dd($group);
     // if (empty($group)) {
     //   abort(404);
     // }
-    $members = $group->users()->get();
+
+
+
+    foreach($members as $member){
+      $membersnames[] = $member->pivot->nickname;
+      $membersnames[] = $member->pivot->user_id;
+      Log::debug($membersnames);
+    }
+
     // $users = $group->users;
     $users = $user->mutual_follows();
 

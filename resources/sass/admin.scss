@@ -32,11 +32,11 @@ body {
 }
 
 .jumbotron
-{   
+{
     padding-top: 0px;
     padding-bottom:0px;
     background-image:url('img/stone_00133.jpg');
-    background-size: cover;
+    background-repeat: repeat;
     background: contain;
     width: 100%; /* make sure to define width to fill container */
     height: 100px; /* define the height in pixels or make sure   */

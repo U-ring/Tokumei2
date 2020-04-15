@@ -35,7 +35,7 @@ body {
   padding-top: 0px;
   padding-bottom: 0px;
   background-image: url(/images/stone_00133.jpg?5dd20daf7bfb50c8a07e4c61a29dfa2c);
-  background-size: cover;
+  background-repeat: repeat;
   background: contain;
   width: 100%;
   /* make sure to define width to fill container */

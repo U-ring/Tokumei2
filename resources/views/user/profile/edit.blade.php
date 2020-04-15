@@ -8,7 +8,7 @@
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
 <div class="blank-top col-md-10 mx-auto">
-  
+
  <div>
    <form action="{{ action('User\ProfileController@update') }}" method="post" enctype="multipart/form-data">
      @csrf
@@ -20,7 +20,12 @@
      </ul>
      @endif
      <div class="form-group row">
-      <input type="file" class="form-control-file" name="avatar">
+      <label class="my-2">
+        <span class="btn btn-primary">
+          ファイルを選択
+          <input type="file" class="form-control-file" name="avatar" style="display:none">
+        </span>
+      </label>
      </div>
      <div class="form-group row">
        <input type="text" name="name" value="{{ $user->name }}">
@@ -37,4 +42,4 @@
  </div>
       {{-- <a class="btn btn-primary m-3" href="/user/profile/delete">このアカウントを削除する</a> --}}
 </div>
-@endsection  
+@endsection

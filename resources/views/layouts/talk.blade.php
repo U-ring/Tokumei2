@@ -27,7 +27,7 @@
         {{-- この章の後半で作成するCSSを読み込みます --}}
         <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     </head>
-    <body>
+    <body class="jumbotron">
         <div id="app jumbotron">
             {{-- 画面上部に表示するナビゲーションバーです。 --}}
             <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-light p-2">
@@ -37,24 +37,15 @@
                       <a class="navbar-brand" href="{{ url('/') }}">
                           {{ config('app.name', 'laravel') }}</a>
                     </div>
-                        <div class="text-right">
-                          <a class="navbar-brand" href="{{ url('/') }}">Nistagram!</a>
-                        </div>
                   </div>
                 </div>
             </nav>
             <ul class="nav bg-light h6 p-4">
               <li class="nav-item px-2">
+                <a class="nav-link" href="/user/user/index">フレンド</a>
+              </li>
+              <li class="nav-item px-2">
                 <a class="nav-link" href="/user/profile/profile">プロフィール</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/facebook">Facebook</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/twitter">Twitter</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/talk">トーク一覧</a>
               </li>
             </ul>
             {{-- ここまでナビゲーションバー --}}

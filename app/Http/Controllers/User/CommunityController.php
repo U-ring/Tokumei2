@@ -9,6 +9,7 @@ use Auth;
 use App\User;
 use App\Community;
 use App\Cmessage;
+use Illuminate\Support\Facades\Log;
 
 class CommunityController extends Controller
 {
@@ -63,15 +64,27 @@ class CommunityController extends Controller
         {
           $user = Auth::user();
           $community = Community::find($request->id);
-          // dd($group);
-          // if (empty($group)) {
-          //   abort(404);
-          // }
-          $members = $community->users()->get();
-          // $users = $group->users;
-          $users = $user->mutual_follows();
 
-          // dd($members);
+          $members = $community->users()->get();
+          $users = $user->mutual_follows();
+          // $users = array_diff($members,$friends);
+
+          foreach ($members as $member) {
+            $test = array('id' => $member->id, 'avatar'=>$member->image_path, 'name' => $member->name, 'text' => $member->text);
+          }
+          foreach ($users as $user) {
+            $test2 = array('id' => $user->id, 'avatar'=>$user->image_path, 'name' => $user->name, 'text' => $user->text);
+          }
+          $test3 = array_diff($test,$test2);
+          Log::debug($test);
+          Log::debug($test2);
+          Log::debug($test3);
+          // foreach ($members as $member) {
+          //   $id[] = $member->id;
+          //   $name[] = $member->name;
+          // }
+          // $users = array_combine($id,$name);
+
           return view('user.community.edit', ['community_form' => $community,'user' => $user, 'members'=>$members, 'users' =>$users]);
         }
 

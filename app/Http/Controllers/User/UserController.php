@@ -26,7 +26,8 @@ class UserController extends Controller
         // dd($users);
       }else {
 
-       
+       $users = null;
+       // $users = User::all();
       }
 
       return view('user.user.index', ['friends' => $friends, 'users' => $users, 'cond_name' => $cond_name]);

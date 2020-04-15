@@ -83,7 +83,7 @@ class User extends Authenticatable
 
     public function is_following($userId)
     {
-        return Follow::where('follow_id', $userId)->exists();
+        return Follow::where('follow_id', $userId)->where('user_id',Auth::id())->exists();
     }
 
     public function follow($userId)//仮引数＝この関数の中では、$userIdという名前で使われる
@@ -114,7 +114,9 @@ class User extends Authenticatable
 
     public function groups()
     {
-      return $this->belongsToMany('\App\Group','group_user');
+      return $this->belongsToMany('\App\Group','group_user')
+                                    ->using('App\GroupUser')
+                                   ->withPivot(['nickname']);
     }
 
     public function messages()

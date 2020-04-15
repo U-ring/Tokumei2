@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\User;
 
@@ -30,6 +31,6 @@ class HomeController extends Controller
       $communities = $user->communities;
       $groups = $user->groups;//このデータはcollectionである。
 
-        return view('home', ['user' => $user, 'communities' =>$communities, 'groups' => $groups]);
+        return view('home', ['user' => $user, 'communities' =>$communities, 'groups' => $groups,]);
     }
 }

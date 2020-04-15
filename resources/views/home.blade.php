@@ -22,14 +22,24 @@
           <tr>
             <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $group->image) }}" class="rounded-circle" width="50" height="50"></div></td>
             <td>{{ $group->name }}</td>
-            <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@edit', ['id' => $group->id]) }}">編集</a></td></div>
             <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@talk', ['id' => $group->id] ) }}">トークを開始</a></td></div>
+            <form action="{{ action('User\GroupController@withdraw')}}" method="post">
+              @csrf
+              <td><button type="submit" name="id" value="{{ $group->id }}" class="m-2 btn btn-danger">退会する</button></td>
+              {{-- {{ csrf_field() }} --}}
+            </form>
           </tr>
           @elseif(!isset($group->image))
           <tr>
            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $group->name }}</td>
            <td>{{ $group->text }}</td>
+           <div><td><a class="btn btn-primary m-3" href="{{ action('User\GroupController@talk', ['id' => $group->id] ) }}">トークを開始</a></td></div>
+           <form action="{{ action('User\GroupController@withdraw')}}" method="post">
+             @csrf
+             <td><button type="submit" name="id" value="{{ $group->id }}" class="m-2 btn btn-danger">退会する</button></td>
+             {{-- {{ csrf_field() }} --}}
+           </form>
           </tr>
           @else
           @endif
@@ -50,14 +60,16 @@
           <tr>
             <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $community->image) }}" class="rounded-circle" width="50" height="50"></div></td>
             <td>{{ $community->name }}</td>
-            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@edit', ['id' => $community->id]) }}">編集</a></td></div>
             <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@talk', ['id' => $community->id] ) }}">トークを開始</a></td></div>
+            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@edit', ['id' => $community->id]) }}">編集</a></td></div>
           </tr>
           @elseif(!isset($community->image))
           <tr>
            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $community->name }}</td>
            <td>{{ $community->text }}</td>
+           <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@talk', ['id' => $community->id] ) }}">トークを開始</a></td></div>
+           <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@edit', ['id' => $community->id]) }}">編集</a></td></div>
           </tr>
           @else
           @endif

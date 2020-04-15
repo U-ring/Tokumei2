@@ -3,14 +3,50 @@
 @section('title.フォロー一覧')
 
 @section('content')
-<div class="p-4"><p class="h3">フォロー一覧</p></div>
-<div class="row m-4 pb-4">
-  <table>
-    @foreach($users as $user)
-    <tr></tr>
-    <td>{{ $user->follows()->name }}</td><!--follows()は、Follow.phpのfollows()関数。-->
-    <td>@include('follow.follow_button',['user'=>$user])</td>
-    @endforeach
-  </table>
+@if($users)
+<div class="p-10 row">
+ <p class="display-5 font-weight-bold py-4 mx-auto">フォローが返ってきませんか？</p>
 </div>
+  <div class="row d-flex justify-content-between p-4">
+      <table>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tbody>
+          @foreach($users as $user)
+          @if(isset($user->facebook_id))
+           <tr>
+            <td><div class="rounded-circle shadow-lg p-1"><img class="rounded-circle" src="{{ $user->avatar }}" width="50" height="50"></div></td>
+            <td>{{ $user->name}}</td>
+            <td>{{ $user->text }}</td>
+            <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
+           </tr>
+           @elseif(isset($user->avatar))
+           <tr>
+            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->text }}</td>
+            <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
+           </tr>
+           @elseif(!isset($user->avatar))
+           <tr>
+            <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->text }}</td>
+            <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
+           </tr>
+           @else
+          @endif
+          @endforeach
+        </tbody>
+      </table>
+  </div>
+</div>
+@else
+<div class="p-10 row">
+ <p class="display-5 font-weight-bold py-4 mx-auto">一方的なフォローはありません。</p>
+</div>
+@endif
 @endsection

@@ -14,19 +14,20 @@ class Message extends Model
 {
     //
     protected $fillable = ['user_id','group_id','image_path','message'];
-    
+
     public function user()//1メッセージで1ユーザーしか取れないから、メソッド名は単数系
     {
       return $this->belongsTo('App\User');
     }
-    
+
     public function getName($userId)
     {
       return User::where('id','$userId')->name->get();
     }
-    
+
     public function group()//ここもuser()同様。
     {
       return $this->belongsTo('\App\Group');
     }
+
 }

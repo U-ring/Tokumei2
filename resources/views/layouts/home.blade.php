@@ -27,42 +27,31 @@
         {{-- この章の後半で作成するCSSを読み込みます --}}
         <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     </head>
-    <body>
-        <div id="app jumbotron">
+    <body class="jumbotron">
+        <div id="app">
             {{-- 画面上部に表示するナビゲーションバーです。 --}}
-            <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-light p-2">
-                <div class="flex-container col-md-12">
-                  <div class="row">
-                    <div class="col-sm">
-                      <a class="navbar-brand" href="{{ url('/') }}">
-                          {{ config('app.name', 'laravel') }}</a>
-                    </div>
-                        <div class="text-right">
-                          <a class="navbar-brand" href="{{ url('/') }}">Nistagram!</a>
-                        </div>
-                  </div>
-                </div>
-            </nav>
-            <ul class="nav bg-light h6 p-4">
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/user/index">フレンド</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/profile/profile">プロフィール</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/twitter">Twitter</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/user/home/talk">トーク一覧</a>
-              </li>
-            </ul>
-            {{-- ここまでナビゲーションバー --}}
-            <main>
-              <div class="container shadow">
-                {{-- コンテンツをここに入れるため、@yieldで空けておきます。 --}}
-                @yield('content')
+            <nav class="navbar navbar-expand-lg navbar-light bg-light p-4">
+              <a class="navbar-brand mx-4" href="{{ url('/') }}">{{ config('app.name', 'laravel') }}</a>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item active mx-4">
+                    <a class="nav-link" href="/user/user/index">フレンド</a>
+                  </li>
+                  <li class="nav-item mx-4">
+                    <a class="nav-link" href="/user/profile/profile">プロフィール</a>
+                  </li>
+                  {{--<li class="nav-item mx-4">
+                        <a class="nav-link" href="/user/home/twitter">Twitter</a>
+                      </li>--}}
+                </ul>
               </div>
+            </nav>
+              {{-- ここまでナビゲーションバー --}}
+              <main>
+                <div class="container shadow-lg">
+                  {{-- コンテンツをここに入れるため、@yieldで空けておきます。 --}}
+                  @yield('content')
+                </div>
             </main>
         </div>
     </body>
