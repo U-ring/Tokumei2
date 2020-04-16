@@ -14,7 +14,7 @@
 
   </div>
 </div>
-{{-- <script src="{{ asset('js/message.js') }}"></script> --}}
+{{-- <script src="{{ secure_asset('js/message.js') }}"></script> --}}
 
 <script>
   $(function() {
@@ -52,7 +52,7 @@ function get_message() {
                            <span class="message-body-user font-weight-bold">${data.messages[i].name}</span>
                            <span class="message-body-content mx-4">${data.messages[i].message}</span>
                         </div>
-                        <img src="{{ asset('storage/image/${data.messages[i].image}')}}" class="rounded">
+                        <img src="{{ secure_asset('storage/image/${data.messages[i].image}')}}" class="rounded">
                       </div>
                       <span class="message-body-time">${data.messages[i].created_at}</span>
                     </div>
@@ -88,5 +88,5 @@ function get_message() {
           {{-- <button type="submit" onclick="send();">送信する</button> --}}
         </div>
     </form>
-<script src="{{ asset('js/message.blade.js') }}"></script>
+<script src="{{ secure_asset('js/message.blade.js') }}"></script>
 @endsection

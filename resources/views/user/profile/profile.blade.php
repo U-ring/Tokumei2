@@ -15,11 +15,11 @@
        </div>
           @elseif($user->avatar)
           <div class="col-md-12 row">
-            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="150" height="150"></div>
+            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="150" height="150"></div>
           </div>
           @elseif(!isset($user->avatar))
           <div class="col-md-12 row">
-            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="150" height="150"></div>
+            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ secure_asset('storage/image/' . 'PpnG7mWNSuOG4o4JZn2VItzkk7vIt9zLVk3zJybe.jpeg') }}" class="rounded-circle" width="150" height="150"></div>
           </div>
           @else
        @endif

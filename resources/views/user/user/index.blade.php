@@ -15,17 +15,9 @@
        </tr>
        <tbody>
          @foreach($friends as $friend)
-         @if(isset($friend->facebook_id) or ($friend->twitter_id))
+          @if(isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img class="rounded-circle" src="{{ $friend->avatar }}" width="50" height="50"></div></td>
-           <td>{{ $friend->name}}</td>
-           <td>{{ $friend->text }}</td>
-           <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
-           <td><a class="btn btn-primary m-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トークを開始</a></td>
-          </tr>
-          @elseif(isset($friend->avatar))
-          <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $friend->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $friend->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
@@ -33,7 +25,7 @@
           </tr>
           @elseif(!isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . 'PpnG7mWNSuOG4o4JZn2VItzkk7vIt9zLVk3zJybe.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
@@ -68,14 +60,14 @@
          </tr>
          @elseif(isset($user->avatar))
          <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
           <td>{{ $user->name }}</td>
           <td>{{ $user->text }}</td>
           <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
          </tr>
          @elseif(!isset($user->avatar))
          <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
           <td>{{ $user->name }}</td>
           <td>{{ $user->text }}</td>
           <td><div>@include('parts.follow_button',['user'=>$user])</div></td>          

@@ -94,11 +94,11 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
            switch ($social) {
                case "facebook":
                    //$newuser->name = $userSocial->getNickname();  ////ここから
-                  $newuser->avatar= $userSocial->getAvatar();
+                  // $newuser->avatar= $userSocial->getAvatar();
                    $newuser->facebook_id = $userSocial->getId(); //
                case "twitter":
                    //$newuser->name = $userSocial->getNickname();  ////
-                   $newuser->avatar=$userSocial->avatar;
+                  // $newuser->avatar=$userSocial->avatar;
                    $newuser->twitter_id = $userSocial->getId();  ////ここまで、変更。
                break;
            }

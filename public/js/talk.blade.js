@@ -125,7 +125,7 @@ function sendform() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kanekotakaki/Desktop/techboost/Tokumei2/resources/js/talk.blade.js */"./resources/js/talk.blade.js");
+module.exports = __webpack_require__(/*! /home/ec2-user/environment/Tokumei/resources/js/talk.blade.js */"./resources/js/talk.blade.js");
 
 
 /***/ })
