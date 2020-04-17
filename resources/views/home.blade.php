@@ -65,9 +65,8 @@
           </tr>
           @elseif(!isset($community->image))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . 'PpnG7mWNSuOG4o4JZn2VItzkk7vIt9zLVk3zJybe.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('public/images/' . 'unknown.jpg') }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $community->name }}</td>
-           <td>{{ $community->text }}</td>
            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@talk', ['id' => $community->id] ) }}">トークを開始</a></td></div>
            <div><td><a class="btn btn-primary m-3" href="{{ action('User\CommunityController@edit', ['id' => $community->id]) }}">編集</a></td></div>
           </tr>
