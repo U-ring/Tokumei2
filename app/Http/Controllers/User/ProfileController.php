@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\User;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use Storage; 
 
 class ProfileController extends Controller
 {
@@ -44,8 +45,10 @@ class ProfileController extends Controller
     }
 
     if(isset($request['avatar'])) {
-      $path = $request->file('avatar')->store('/public/image');
-      $user->avatar = basename($path);
+      // $path = $request->file('avatar')->store('/public/image');
+      // $user->avatar = basename($path);
+      $path = Storage::disk('s3')->putFile('/',$request['avatar'],'public');
+      $user->avatar = Storage::disk('s3')->url($path);
     }
 
     // $profile_form = $request->all();

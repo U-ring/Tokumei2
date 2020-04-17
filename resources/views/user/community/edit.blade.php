@@ -16,7 +16,7 @@
      </ul>
      @endif
      <div class="form-group row">
-       <input type="file" class="form-control-file" name="avatar">
+       <input type="file" class="form-control-file" name="image">
      </div>
      <div class="form-group mx-auto row test">
        <p class="font-weight-bold px-4">メンバーを退会させる</p>

@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->string('name');
-            $table->string('note')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

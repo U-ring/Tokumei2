@@ -35,7 +35,7 @@
        </table>
      </div>
      <div class="form-group row">
-       <input type="file" class="form-control-file" name="avatar">
+       <input type="file" class="form-control-file" name="image">
      </div>
      <div class="float-right pb-6">
         <input type="text" class="m-2" name="name"/ placeholder="会議名を入力">

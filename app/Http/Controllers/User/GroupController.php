@@ -14,6 +14,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Group;
 use App\Message;
 use Illuminate\Support\Facades\Log;
+use Storage; 
 
 class GroupController extends Controller
 {
@@ -42,9 +43,13 @@ class GroupController extends Controller
       $me = Auth::user();
       $group->user_id = $me->id;
 
-      if(isset($request['avatar'])) {
-        $path = $request->file('avatar')->store('/public/image');
-        $group->image = basename($path);
+      if(isset($request['image'])) {
+        // $path = $request->file('avatar')->store('/public/image');
+        // $group->image = basename($path);
+        
+        $path = Storage::disk('s3')->putFile('/',$request['image'],'public');
+        $group->image = Storage::disk('s3')->url($path);
+
       }
 
       $group->save();

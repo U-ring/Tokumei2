@@ -7,15 +7,9 @@
        <div class="text-right">
          <a class="btn btn-primary blank-top" href="/user/profile/edit">編集する</a>
        </div>
-       @if(isset($user->facebook_id) or ($user->twitter_id))
-       <div  class="col-md-12 row">
-          <div class="float-left rounded-circle p-1 shadow-lg">
-            <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="150" height="150">
-          </div>
-       </div>
-          @elseif($user->avatar)
+          @if($user->avatar)
           <div class="col-md-12 row">
-            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="150" height="150"></div>
+            <div class="float-left rounded-circle p-1 shadow-lg"><img src="{{ $user->avatar }}" class="rounded-circle" width="150" height="150"></div>
           </div>
           @elseif(!isset($user->avatar))
           <div class="col-md-12 row">

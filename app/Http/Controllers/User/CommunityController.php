@@ -10,6 +10,7 @@ use App\User;
 use App\Community;
 use App\Cmessage;
 use Illuminate\Support\Facades\Log;
+use Storage; 
 
 class CommunityController extends Controller
 {
@@ -38,9 +39,12 @@ class CommunityController extends Controller
           $me = Auth::user();
           $community->user_id = $me->id;
 
-          if(isset($request['avatar'])) {
-            $path = $request->file('avatar')->store('/public/image');
-            $community->image = basename($path);
+          if(isset($request['image'])) {
+            // $path = $request->file('avatar')->store('/public/image');
+            // $community->image = basename($path);
+            $path = Storage::disk('s3')->putFile('/',$request['image'],'public');
+            $community->image = Storage::disk('s3')->url($path);
+
           }
 
           $community->save();
@@ -103,8 +107,8 @@ class CommunityController extends Controller
             }
           }
 
-          if(isset($request['avatar'])) {
-            $path = $request->file('avatar')->store('/public/image');
+          if(isset($request['image'])) {
+            $path = $request->file('image')->store('/public/image');
             $community->image = basename($path);
           }
 

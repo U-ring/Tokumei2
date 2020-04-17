@@ -17,7 +17,7 @@
          @foreach($friends as $friend)
           @if(isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $friend->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
