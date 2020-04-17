@@ -44,7 +44,7 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
 
         # 本来はアカウント有効状態を確認するためのものですが、プロフィール取得にも使用可能
         $twitter_user_info = $twitter_user->get('account/verify_credentials');
-        dd($twitter_user_info);
+        // dd($twitter_user_info);
     }
   
    //ログインボタンからリンク
