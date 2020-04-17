@@ -54,7 +54,7 @@ function get_messageC() {
                         </div>
                         <div class="row">
                           <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
-                          <img src="{{ secure_asset('storage/image/${data.messages[i].image}')}}" class="rounded float-right m-2" width="400" height="400">
+                          <img src="${data.messages[i].image}" class="rounded float-right m-2" width="400" height="400">
                         </div>
                       </div>
                     </div>

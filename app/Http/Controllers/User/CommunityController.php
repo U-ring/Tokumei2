@@ -184,8 +184,10 @@ class CommunityController extends Controller
         // Log::debug($request->image);
         if (isset($form['image'])) {
           // \Log::info($image);
-          $path = $request->file('image')->store('public/image');
-          $message->image_path = basename($path);
+          // $path = $request->file('image')->store('public/image');
+          // $message->image_path = basename($path);
+          $path = Storage::disk('s3')->putFile('/',$request['image'],'public');
+          $message->image_path = Storage::disk('s3')->url($path);
         } else {
           $message->image_path = null;
         }
