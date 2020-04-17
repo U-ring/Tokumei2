@@ -25,7 +25,7 @@
           </tr>
           @elseif(!isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . 'PpnG7mWNSuOG4o4JZn2VItzkk7vIt9zLVk3zJybe.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
@@ -51,14 +51,7 @@
       </tr>
       <tbody>
         @foreach($users as $user)
-        @if(isset($user->facebook_id) or ($user->twitter_id))
-         <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img class="rounded-circle" src="{{ $user->avatar }}" width="50" height="50"></div></td>
-          <td>{{ $user->name}}</td>
-          <td>{{ $user->text }}</td>
-          <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
-         </tr>
-         @elseif(isset($user->avatar))
+         @if(isset($user->avatar))
          <tr>
           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
           <td>{{ $user->name }}</td>
@@ -67,7 +60,7 @@
          </tr>
          @elseif(!isset($user->avatar))
          <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . 'caceZ67jaTCyp7t9oVgk4KfHjRKIdfQo6Aw6exnY.jpeg') }}" class="rounded-circle" width="50" height="50"></div></td>
+          <td><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
           <td>{{ $user->name }}</td>
           <td>{{ $user->text }}</td>
           <td><div>@include('parts.follow_button',['user'=>$user])</div></td>          
