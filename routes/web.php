@@ -20,9 +20,11 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('profile/edit','User\ProfileController@edit')->middleware('auth');
   Route::post('profile/update','User\ProfileController@update')->middleware('auth');
   Route::get('profile/profile','User\ProfileController@profile')->middleware('auth');
+  
   Route::get('home/twitter','User\HomeController@twitter')->middleware('auth');
   Route::get('home/facebook','User\HomeController@facebook')->middleware('auth');
   Route::get('home/talk','User\HomeController@talk')->middleware('auth');
+  
   Route::get('group/create','User\GroupController@add')->middleware('auth');
   Route::post('group/create','User\GroupController@create')->middleware('auth');
   Route::get('group/talk','User\GroupController@talk')->middleware('auth');
@@ -35,6 +37,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::post('group/talk','User\GroupController@sendM');
   Route::post('group/edit','User\GroupController@update')->middleware('auth');
   Route::post('group/withdraw','User\GroupController@withdraw')->middleware('auth');
+  
   Route::get('community/create','User\CommunityController@add')->middleware('auth');
   Route::post('community/create','User\CommunityController@create')->middleware('auth');
   Route::get('community/talk','User\CommunityController@talk')->middleware('auth');
@@ -43,6 +46,7 @@ Route::group(['prefix' => 'user'], function(){
   Route::get('community/edit','User\CommunityController@edit')->middleware('auth');
   Route::post('community/update','User\CommunityController@update')->middleware('auth');
   Route::post('community/withdraw','User\CommunityController@withdraw')->middleware('auth');
+  
   Route::get('user/index','User\UserController@index')->middleware('auth');//←ようこそ、のページ
   Route::get('user/talk','User\UserController@talk')->middleware('auth');
   Route::post('user/talk','User\UserController@talk')->middleware('auth');//この行がないと、「action User\UserController@talk   undefinedになる。」
