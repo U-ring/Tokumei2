@@ -18,7 +18,7 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
     {
         $oauth_token = session('oauth_token');
         $oauth_token_secret = session('oauth_token_secret');
-        dd($oauth_token);
+        // dd($oauth_token);
 
         # request_tokenが不正な値だった場合エラー
         if ($request->has('oauth_token') && $oauth_token !== $request->oauth_token) {
