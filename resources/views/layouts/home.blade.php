@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- CSRF Token -->
          {{-- 後の章で説明します --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,7 +31,6 @@
             {{-- 画面上部に表示するナビゲーションバーです。 --}}
             <nav class="navbar navbar-expand-lg navbar-light bg-light p-4">
               <a class="navbar-brand mx-4" href="{{ url('/') }}">{{ config('app.name', 'laravel') }}</a>
-              <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                   <li class="nav-item active mx-4">
                     <a class="nav-link" href="/user/user/index">フレンド</a>
@@ -44,7 +42,6 @@
                         <a class="nav-link" href="/user/home/twitter">Twitter</a>
                       </li>--}}
                 </ul>
-              </div>
             </nav>
               {{-- ここまでナビゲーションバー --}}
               <main>

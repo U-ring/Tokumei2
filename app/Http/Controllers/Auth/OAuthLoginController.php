@@ -18,7 +18,7 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
     {
         $oauth_token = session('oauth_token');
         $oauth_token_secret = session('oauth_token_secret');
-        // dd($oauth_token);
+        //session()は()内のプロパティを取得するという関数。
 
         # request_tokenが不正な値だった場合エラー
         if ($request->has('oauth_token') && $oauth_token !== $request->oauth_token) {
@@ -52,6 +52,7 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
    public function socialLogin($social)
    {
        return Socialite::driver($social)->redirect();
+       //driver()はログイン機能を持ったクラスのインスタンスを返すメソッド。引数が「何でログインするのか」
    }
    //Callback処理
    public function handleProviderCallback($social)
@@ -140,7 +141,7 @@ class OAuthLoginController extends Controller //←Controllerが規定クラス
             config('twitter.access_token'),
             config('twitter.access_token_secret')
         );
-
+        //config/service.phpから('')を呼んでいる。そこになければ.envから呼ぶ。
       
       $params = [
     'cursor' => '-1',

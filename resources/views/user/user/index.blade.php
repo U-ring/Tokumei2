@@ -21,7 +21,7 @@
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
-           <td><a class="btn btn-primary m-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トークを開始</a></td>
+           <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
           </tr>
           @elseif(!isset($friend->avatar))
           <tr>
@@ -29,7 +29,7 @@
            <td>{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
-           <td><a class="btn btn-primary m-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トークを開始</a></td>
+           <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
           </tr>
           @else
          @endif
