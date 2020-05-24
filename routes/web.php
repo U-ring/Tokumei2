@@ -84,3 +84,4 @@ Route::get('/user/result/ajax', 'User\UserController@getMessageU');
 Auth::routes();
 Route::get('/','HomeController@index')->middleware('auth');//←ようこそ、のページ
 Route::get('/home','HomeController@index');
+// Route::post('/home','User\GroupController@withdraw');

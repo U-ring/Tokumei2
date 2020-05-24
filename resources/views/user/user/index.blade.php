@@ -8,25 +8,27 @@
  </div>
  <div class="row d-flex justify-content-between px-4">
      <table>
-       <tr>
-         <th></th>
-         <th></th>
-         <th></th>
-       </tr>
-       <tbody>
+       <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+       </thead> 
          @foreach($friends as $friend)
           @if(isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50"></div></td>
-           <td>{{ $friend->name }}</td>
+           <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50"></div></td>
+           <td width="25%">{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
            <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
           </tr>
           @elseif(!isset($friend->avatar))
           <tr>
-           <td><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
-           <td>{{ $friend->name }}</td>
+           <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
+           <td width="25%">{{ $friend->name }}</td>
            <td>{{ $friend->text }}</td>
            <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
            <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
@@ -34,7 +36,6 @@
           @else
          @endif
          @endforeach
-       </tbody>
      </table>
  </div>
  <div class="p-10 row">
@@ -42,35 +43,34 @@
  </div>
  <div class="row d-flex justify-content-between px-4">
 @if(isset($users))
-  <div class="m-4">
     <table>
+     <thead>
       <tr>
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
-      <tbody>
+     </thead> 
         @foreach($users as $user)
          @if(isset($user->avatar))
          <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
-          <td>{{ $user->name }}</td>
+          <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="{{ secure_asset('storage/image/' . $user->avatar) }}" class="rounded-circle" width="50" height="50"></div></td>
+          <td width="25%">{{ $user->name }}</td>
           <td>{{ $user->text }}</td>
           <td><div>@include('parts.follow_button',['user'=>$user])</div></td>
          </tr>
          @elseif(!isset($user->avatar))
          <tr>
-          <td><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
-          <td>{{ $user->name }}</td>
+          <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
+          <td width="25%">{{ $user->name }}</td>
           <td>{{ $user->text }}</td>
           <td><div>@include('parts.follow_button',['user'=>$user])</div></td>          
          </tr>
          @else
         @endif
         @endforeach
-      </tbody>
     </table>
-  </div>
 @endif
    <div class="float-right m-4">
     <form action="{{ action('User\UserController@index') }}" method="get">

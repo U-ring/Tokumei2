@@ -284,6 +284,6 @@ class GroupController extends Controller
 
    $user->groups()->detach($group->id);
 
-   return redirect('home');
+  return redirect('home');
   }
 }
