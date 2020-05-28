@@ -281,9 +281,17 @@ class GroupController extends Controller
    $group = new Group;
    $group->id = $request->id;
    $user = Auth::user();
+   //上記は追記コード
 
    $user->groups()->detach($group->id);
 
+   $groupuser = $group->users()->get();
+    
+    if($groupuser->count() == 0){
+      Message::where('group_id',$group->id)->delete();
+      Group::destroy($group->id);
+    }
+   
   return redirect('home');
   }
 }

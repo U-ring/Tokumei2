@@ -124,8 +124,14 @@ class CommunityController extends Controller
          $community = new Community;
          $community->id = $request->id;
          $user = Auth::user();
-
+         
          $user->communities()->detach($community->id);
+         
+        $communityuser = $community->users()->get();
+          if($communityuser->count() == 0){
+            Cmessage::where('community_id',$community->id)->delete();
+            Community::destroy($community->id);
+          }
 
          return redirect('home');
         }

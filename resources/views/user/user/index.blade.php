@@ -6,37 +6,74 @@
  <div class="p-10 row">
   <p class="display-5 font-weight-bold py-4 mx-auto">フレンドと有意義なコミュニケーションを楽しみましょう。</p>
  </div>
- <div class="row d-flex justify-content-between px-4">
-     <table>
-       <thead>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-       </thead> 
-         @foreach($friends as $friend)
-          @if(isset($friend->avatar))
-          <tr>
-           <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50"></div></td>
-           <td width="25%">{{ $friend->name }}</td>
-           <td>{{ $friend->text }}</td>
-           <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
-           <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
-          </tr>
-          @elseif(!isset($friend->avatar))
-          <tr>
-           <td style="width:60px;height:60px;"><div class="rounded-circle shadow-lg p-1"><img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50"></div></td>
-           <td width="25%">{{ $friend->name }}</td>
-           <td>{{ $friend->text }}</td>
-           <td><div>@include('parts.follow_button',['user'=>$friend])</div></td>
-           <td><a class="btn btn-primary ml-3 my-3" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></td>
-          </tr>
-          @else
-         @endif
-         @endforeach
-     </table>
+ <div class="d-flex justify-content-between flex-wrap px-2">
+  
+       @foreach($friends as $friend)
+        @if(isset($friend->avatar))
+         <div class="d-flex flex-row pb-3">
+          <table>
+           <thead>
+            <tr>
+             <th></th>
+             <th></th>
+             <th></th>
+            </tr>
+           </thead>
+           <tr>
+            <td>
+            <div class="my-auto mx-1" width="25%">
+             <div class="my-auto" style="width:60px;height:60px;">
+              <div class="rounded-circle shadow-lg p-1">
+               <img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50">
+              </div>
+             </div>
+            <h class="font-weight-bold">{{ $friend->name }}</h>
+           </div>
+            </td>
+            <td><div class="my-auto"><h class="ml-1 pr-2">{{ $friend->text }}</h></div></td>
+            <td>
+             <div class="d-flex flex-column px-2">
+              <div class="mb-1">@include('parts.follow_button',['user'=>$friend])</div>
+              <div class="mt-1"><a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></div>
+             </div>
+            </td>
+           </tr>
+          </table>
+         </div>   
+        @elseif(!isset($friend->avatar))
+         <div class="d-flex flex-row pb-3">
+          <table>
+           <thead>
+            <tr>
+             <th></th>
+             <th></th>
+             <th></th>
+            </tr>
+           </thead>
+           <tr>
+            <td>
+            <div class="my-auto mx-1" width="25%">
+             <div class="my-auto" style="width:60px;height:60px;">
+              <div class="rounded-circle shadow-lg p-1">
+               <img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50">
+              </div>
+             </div>
+            <h class="font-weight-bold">{{ $friend->name }}</h>
+           </div>
+            </td>
+            <td><div class="my-auto"><h class="ml-1 pr-2">{{ $friend->text }}</h></div></td>
+            <td>
+             <div class="d-flex flex-column px-2">
+              <div class="mb-1">@include('parts.follow_button',['user'=>$friend])</div>
+              <div class="mt-1"><a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></div>
+             </div>
+            </td>
+           </tr>
+          </table>
+         </div> 
+        @else
+       @endif
+       @endforeach
  </div>
  <div class="p-10 row">
   <p class="display-5 font-weight-bold py-4 mx-auto">まだフレンドではない仲間を発見しましょう。</p>
