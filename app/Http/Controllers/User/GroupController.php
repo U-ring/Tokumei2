@@ -142,14 +142,13 @@ class GroupController extends Controller
         'name' => $name,
         'message' => $messageRecord->message,
         'image' => $messageRecord->image_path,
-        'created_at' => $messageRecord->created_at
+        'created_at' => $messageRecord->created_at->format('Y/m/d H:s')
         ];
-
       $messages[] = $item;
     }
     //モデルの関連づけメソッドは()いらない。✖︎user()
-
-    $json = ["messages" => $messages];
+    asort($nName);
+    $json = ["messages" => $messages, "names" => $nName];
     // dd($json);
     return response()->json($json);
   }
@@ -219,6 +218,31 @@ class GroupController extends Controller
     }
 
     $message->save();
+    
+    $count = $message->where('group_id',$_POST['group_id'])->count();
+          if ($count > 50) {
+            $message50 = DB::table('messages')
+            ->where('group_id', $_POST['group_id'])
+            ->orderBy('id','desc')
+            // ->take(3)->pluck('id')->min();
+            ->take(50);
+            $deleteid = $message50->pluck('id')->min();
+  
+            $messageins = message::where('group_id',$_POST['group_id']);
+            $deletemessage = $messageins->where('id','<',$deleteid);
+            
+            $image = $deletemessage->pluck('image_path');
+            
+            foreach($image as $item){
+              if($item !== null){
+                $item = basename($item);
+                $disk = Storage::disk('s3');
+                $disk->delete('/', $item);
+              }
+            }
+            
+            $deletemessage->delete();
+          }
   }
 
   public function edit(Request $request)
@@ -282,14 +306,34 @@ class GroupController extends Controller
    $group->id = $request->id;
    $user = Auth::user();
    //上記は追記コード
-
+   
    $user->groups()->detach($group->id);
 
    $groupuser = $group->users()->get();
     
     if($groupuser->count() == 0){
-      Message::where('group_id',$group->id)->delete();
-      Group::destroy($group->id);
+      $deletegrp = Group::find($group->id);
+      
+      $deleteimg = basename($deletegrp->image);
+      $disk = Storage::disk('s3');
+      $disk->delete('/', $deleteimg);
+      // Message::where('group_id',$group->id)->delete();
+      $deletemsg = Message::where('group_id',$group->id);
+      $msgimg = Message::where('group_id',$request->id)->get();
+      
+        foreach($msgimg as $item){
+            
+              Log::debug($item);
+              $deleteimg = basename($item->image_path);
+              Log::debug($msgimg);
+              $disk = Storage::disk('s3');
+              $disk->delete('/', $deleteimg);
+             
+            }
+      
+            
+      $deletemsg->delete();
+      $deletegrp->delete(); 
     }
    
   return redirect('home');

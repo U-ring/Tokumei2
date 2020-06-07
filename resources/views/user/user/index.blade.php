@@ -6,8 +6,8 @@
  <div class="p-10 row">
   <p class="display-5 font-weight-bold py-4 mx-auto">フレンドと有意義なコミュニケーションを楽しみましょう。</p>
  </div>
- <div class="d-flex justify-content-between flex-wrap px-2">
-  
+ 
+ <div class="d-flex justify-content-between flex-wrap">
        @foreach($friends as $friend)
         @if(isset($friend->avatar))
          <div class="d-flex flex-row pb-3">
@@ -27,19 +27,29 @@
                <img src="{{ $friend->avatar }}" class="rounded-circle" width="50" height="50">
               </div>
              </div>
-            <h class="font-weight-bold">{{ $friend->name }}</h>
+             <div style="width:50px;">
+               <h class="font-weight-bold">{{ $friend->name }}</h>
+             </div>
            </div>
             </td>
-            <td><div class="my-auto"><h class="ml-1 pr-2">{{ $friend->text }}</h></div></td>
-            <td>
+            <td class="align-bottom">
+             <div class="my-auto ml-3" style="width:50px;">
+               <h>{{ $friend->text }}</h>
+             </div>  
+            </td>
+            <td class="align-baseline">
              <div class="d-flex flex-column px-2">
-              <div class="mb-1">@include('parts.follow_button',['user'=>$friend])</div>
-              <div class="mt-1"><a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></div>
+              <div>
+                @include('parts.follow_button',['user'=>$friend])
+              </div>
+              <div>
+               <a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a>
+              </div>
              </div>
             </td>
            </tr>
           </table>
-         </div>   
+         </div>
         @elseif(!isset($friend->avatar))
          <div class="d-flex flex-row pb-3">
           <table>
@@ -58,23 +68,37 @@
                <img src="https://tokumeikaigi.s3.us-east-2.amazonaws.com/unknown.jpg" class="rounded-circle" width="50" height="50">
               </div>
              </div>
-            <h class="font-weight-bold">{{ $friend->name }}</h>
+             <div style="width:50px;">
+                <h class="font-weight-bold">{{ $friend->name }}</h>
+             </div>
            </div>
+            </td>   
+            <td class="align-bottom">
+             <div class="my-auto ml-3" style="width:50px;">
+               <h>{{ $friend->text }}</h>
+             </div>  
             </td>
-            <td><div class="my-auto"><h class="ml-1 pr-2">{{ $friend->text }}</h></div></td>
-            <td>
+            <td class="align-baseline">
              <div class="d-flex flex-column px-2">
-              <div class="mb-1">@include('parts.follow_button',['user'=>$friend])</div>
-              <div class="mt-1"><a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">トーク</a></div>
+              <div>
+                @include('parts.follow_button',['user'=>$friend])
+              </div>
+             <div>
+              <a class="btn btn-primary" href="{{ action('User\UserController@talk', ['id' => $friend->id] ) }}">
+               トーク
+              </a>
+             </div>
              </div>
             </td>
            </tr>
           </table>
-         </div> 
+         </div>
         @else
        @endif
        @endforeach
- </div>
+  </div>
+  
+
  <div class="p-10 row">
   <p class="display-5 font-weight-bold py-4 mx-auto">まだフレンドではない仲間を発見しましょう。</p>
  </div>

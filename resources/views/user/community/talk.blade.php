@@ -54,7 +54,9 @@ function get_messageC() {
                         </div>
                         <div class="row">
                           <span class="message-body-content mx-4 h5">${data.messages[i].message}</span>
-                          <img src="${data.messages[i].image}" class="rounded float-right m-2" width="400" height="400">
+                        </div>
+                        <div class="row">
+                          <img src="${data.messages[i].image}" class="rounded float-right mt-2" width="300" height="300">
                         </div>
                       </div>
                     </div>
@@ -105,6 +107,7 @@ $(function () {
 function sendform() {
   // フォームデータを取得
   var formdata = new FormData($('#message_form').get(0)); // POSTでアップロード
+  $('#message_form')[0].reset();
   for (let value of formdata.entries()) {
     console.log(value);
 }

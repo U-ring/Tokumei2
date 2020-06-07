@@ -51,7 +51,7 @@
                     <div class="p-3 blank-top row shadow">
                       @yield('nameOf')
                     </div>
-                    <div class="row p-4">
+                    <div class="row pt-4 pr-4 pb-4">
                       @yield('message')
                     </div>
                     <div class="p-4 shadow">

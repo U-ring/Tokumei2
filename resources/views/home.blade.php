@@ -34,7 +34,7 @@
            </div>
             </td>
             <td>
-              <div>
+              <div style="width:50px;">
                 <h class="font-weight-bold">{{ $group->name }}</h>
               </div>
             </td>
@@ -76,7 +76,7 @@
            </div>
             </td>   
             <td>
-              <div>
+              <div style="width:50px;">
                 <h class="font-weight-bold">{{ $group->name }}</h>
               </div>
             </td>
@@ -128,7 +128,7 @@
            </div>
             </td>
             <td>
-              <div>
+              <div style="width:50px;">
                 <h class="font-weight-bold">{{ $community->name }}</h>
               </div>
             </td>
@@ -145,7 +145,7 @@
           </table>
          </div>
         @elseif(!isset($community->image))
-         <div class="d-flex flex-row pb-3">
+         <div class="d-flex flex-row pb-3"> 
           <table>
            <thead>
             <tr>
@@ -165,7 +165,7 @@
            </div>
             </td>
             <td>
-              <div>
+              <div style="width:50px;">
                 <h class="font-weight-bold">{{ $community->name }}</h>
               </div>
             </td>

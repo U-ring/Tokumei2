@@ -63,7 +63,7 @@ class UserController extends Controller
         'name' => $umessage->user->name,
         'message' => $umessage->message,
         'image' => $umessage->image_path,
-        'created_at' => $umessage->created_at
+        'created_at' => $umessage->created_at->format('Y/m/d H:s')
         ];
 
       $messages[] = $item;
@@ -114,6 +114,31 @@ class UserController extends Controller
   }
 
   $message->save();
+ 
+  $count = $message->where('talk_user_id',$_POST['user_id'])->count();
+          if ($count > 50) {
+            $message50 = DB::table('umessages')
+            ->where('talk_user_id', $_POST['user_id'])
+            ->orderBy('id','desc')
+            // ->take(3)->pluck('id')->min();
+            ->take(50);
+            $deleteid = $message50->pluck('id')->min();
+  
+            $messageins = umessage::where('talk_user_id',$_POST['user_id']);
+            $deletemessage = $messageins->where('id','<',$deleteid);
+            
+            $image = $deletemessage->pluck('image_path');
+            
+            foreach($image as $item){
+              if($item !== null){
+                $item = basename($item);
+                $disk = Storage::disk('s3');
+                $disk->delete('/', $item);
+              }
+            }
+            
+            $deletemessage->delete();
+          }
 }
 
   public function edit()

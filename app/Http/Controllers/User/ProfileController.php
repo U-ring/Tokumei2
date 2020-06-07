@@ -47,6 +47,9 @@ class ProfileController extends Controller
     if(isset($request['avatar'])) {
       // $path = $request->file('avatar')->store('/public/image');
       // $user->avatar = basename($path);
+      $deleteavt = basename($user->avatar);
+      $disk = Storage::disk('s3');
+      $disk->delete('/', $deleteavt);
       $path = Storage::disk('s3')->putFile('/',$request['avatar'],'public');
       $user->avatar = Storage::disk('s3')->url($path);
     }
